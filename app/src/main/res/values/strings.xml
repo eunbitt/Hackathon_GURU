@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hackathon_GURU</string>
+    <string name="kakao_app_key">58e8c8d2a35ff23dec33d33281011a29</string>
 </resources>
