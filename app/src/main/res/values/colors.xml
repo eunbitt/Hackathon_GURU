@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="mint_uperbar">#40C0DB</color>
+    <color name="navy_pin">#183F62</color>
+    <color name="skyblue_backscreen">#F0FCFF</color>
+    <color name="mint_logo">#47D1EE</color>
 </resources>
