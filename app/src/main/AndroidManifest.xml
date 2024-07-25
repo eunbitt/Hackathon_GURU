@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
-        <activity android:name=".MyScrap"></activity>
+        <activity android:name=".MyScrapReal"></activity>
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".MyScrap_real" />
+        <activity android:name=".MyScrap" />
         <activity android:name=".MyScrapDetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
