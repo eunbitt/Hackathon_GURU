@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hackathon_guru">
 
+    <!-- 카카오맵 사용을 위한 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
-        <activity android:name=".GroupAdapter"></activity>
-        <activity android:name=".AddGroup" />
-        <activity android:name=".GroupListMain" />
-        <activity android:name=".GroupList" />
+        <activity android:name=".MyScrapActivity"/>
+        <activity android:name=".MyScrapDetailActivity" />
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+>>>>>>> master
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
