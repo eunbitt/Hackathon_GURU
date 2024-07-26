@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
+        <activity android:name=".GroupAdapter"></activity>
+        <activity android:name=".AddGroup" />
+        <activity android:name=".GroupListMain" />
+        <activity android:name=".GroupList" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
