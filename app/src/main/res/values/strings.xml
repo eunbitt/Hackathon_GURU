@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hackathon_GURU</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
+    <string name="register_text">Not a member? <font color='#000000'><u>Register now</u></font></string>
 </resources>
