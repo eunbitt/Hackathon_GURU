@@ -1,11 +1,11 @@
 package com.example.hackathon_guru
 
-import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.hackathon_guru.databinding.ActivityGroupListMainBinding
 import com.kakao.sdk.common.KakaoSdk;
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityGroupListMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
