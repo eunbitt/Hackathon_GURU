@@ -27,7 +27,7 @@
             android:paddingBottom="16dp"
             android:text="Welcome !"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
