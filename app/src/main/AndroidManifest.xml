@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
 
-        <activity android:name=".MyScrapReal"/>
+        <activity android:name=".MyScrapActivity"/>
         <activity android:name=".MyScrapDetailActivity" />
         <activity
             android:name=".MapActivity"
