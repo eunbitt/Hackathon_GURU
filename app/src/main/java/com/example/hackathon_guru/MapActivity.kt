@@ -14,7 +14,7 @@ class MapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        mapView = findViewById(R.id.map_view)
+        mapView = findViewById(R.id.mapView)
         mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출됨
@@ -44,4 +44,5 @@ class MapActivity : AppCompatActivity() {
         super.onDestroy()
         // mapView.onDestroy() // MapView의 onDestroy 호출
     }
+
 }

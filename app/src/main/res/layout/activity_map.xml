@@ -1,11 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.kakao.vectormap.MapView
-        android:id="@+id/map_view"
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:background="#D0E3B4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="-184dp">
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <SearchView
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/box_border"
+                android:closeIcon="@drawable/baseline_clear_24"
+                android:elevation="20dp"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@color/transparent"
+                android:queryHint="@string/search" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/restaurantBtn"
+                    android:layout_width="78dp"
+                    android:layout_height="34dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/pretendardbold"
+                    android:text="@string/restaurant" />
+
+                <Button
+                    android:id="@+id/cafeBtn"
+                    android:layout_width="78dp"
+                    android:layout_height="34dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/pretendardbold"
+                    android:text="@string/cafe" />
+
+                <Button
+                    android:id="@+id/lodgingBtn"
+                    android:layout_width="78dp"
+                    android:layout_height="34dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/pretendardbold"
+                    android:text="@string/lodging" />
+
+                <Button
+                    android:id="@+id/spotBtn"
+                    android:layout_width="78dp"
+                    android:layout_height="34dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/pretendardbold"
+                    android:text="@string/spot" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.kakao.vectormap.MapView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@drawable/nav_item_selector"
+        app:itemTextColor="@drawable/nav_item_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
