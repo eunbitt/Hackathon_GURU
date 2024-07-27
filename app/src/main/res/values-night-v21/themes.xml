@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Theme.Hackathon_GURU" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary branding color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -12,13 +13,5 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
-    <style name="Theme.Hackathon_GURU" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/main_color</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/button_color</item>
-        <!-- Text appearance. -->
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">16sp</item>
     </style>
 </resources>
