@@ -9,11 +9,22 @@
         <item name="colorAccent">@color/black</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
     <!-- Toolbar title text style -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item> <!-- 원하는 폰트 크기로 조정 -->
         <item name="android:textColor">#FFFFFF</item> <!-- 원하는 텍스트 색상으로 조정 -->
+    </style>
+
+    <!-- BottomNavigationView style -->
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendardbold</item>
     </style>
 
 </resources>
