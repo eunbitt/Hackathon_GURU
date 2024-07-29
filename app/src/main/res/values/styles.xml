@@ -21,4 +21,10 @@
         <item name="android:textColor">#FFFFFF</item> <!-- 원하는 텍스트 색상으로 조정 -->
     </style>
 
+    <!-- BottomNavigationView style -->
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendardbold</item>
+    </style>
+
 </resources>
