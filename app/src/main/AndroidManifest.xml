@@ -7,13 +7,23 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- 위치정보 사용 권한 선언 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Hackathon_GURU">
+
+
+        <meta-data
+            android:name="com.kakao.vectormap.APP_KEY"
+            android:value="58e8c8d2a35ff23dec33d33281011a29"/>
 
         <activity
             android:name=".MyScrapActivity"

@@ -43,6 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.gms:play-services-location:21.1.0' // Google Play 서비스 location
     implementation 'com.kakao.maps.open:android:2.9.5' // 카카오지도 SDK
     implementation "com.kakao.sdk:v2-all:2.20.3" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.20.3" // 카카오 로그인 API 모듈
