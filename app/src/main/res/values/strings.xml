@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Hackathon_GURU</string>
-    <string name="kakao_app_key">58e8c8d2a35ff23dec33d33281011a29</string>
+    <string name="app_name">Triend</string>
     <string name="search">Search</string>
     <string name="restaurant">음식점</string>
     <string name="cafe">카페</string>
     <string name="lodging">숙소</string>
     <string name="spot">가볼만한곳</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="MAPS_API_KEY">AIzaSyAsowPDDEVKf1HpXj0t1raLF85IIAjSBKg</string>
 </resources>

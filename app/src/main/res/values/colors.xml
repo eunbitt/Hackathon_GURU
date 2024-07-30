@@ -16,4 +16,5 @@
     <color name="navy_pin">#183F62</color>
     <color name="skyblue_backscreen">#F0FCFF</color>
     <color name="mint_logo">#47D1EE</color>
+    <color name="transparent">#00000000</color>
 </resources>

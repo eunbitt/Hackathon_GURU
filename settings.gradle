@@ -1,4 +1,22 @@
+// 구글맵 api
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
 rootProject.name = "Hackathon_GURU"
 
 // Include application module
 include ':app'
+
+// 구글맵 api
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

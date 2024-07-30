@@ -1,14 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
-    compileSdkVersion 34
+    compileSdk = 34
     defaultConfig {
         applicationId "com.example.hackathon_guru"
-        minSdkVersion 26
-        targetSdkVersion 34
+        minSdk 26
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -20,7 +21,9 @@ android {
         }
     }
     buildFeatures {
+        buildConfig = true
         dataBinding true
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -43,6 +46,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.google.android.gms:play-services-location:21.1.0' // Google Play 서비스 location
-    implementation "com.kakao.sdk:v2-user:2.20.3" // 카카오 로그인 API 모듈
+    implementation("com.google.android.gms:play-services-maps:18.2.0") // Maps SDK for Android
 }
