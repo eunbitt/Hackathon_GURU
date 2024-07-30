@@ -7,17 +7,17 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var btnMap : Button
+//    lateinit var btnMap : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnMap= findViewById(R.id.btnMap)
-
-        btnMap.setOnClickListener {
-            var intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-        }
+//        btnMap= findViewById(R.id.btnMap)
+//
+//        btnMap.setOnClickListener {
+//            var intent = Intent(this, MapActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 }

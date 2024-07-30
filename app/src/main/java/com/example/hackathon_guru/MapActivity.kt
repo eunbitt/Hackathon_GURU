@@ -16,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.hackathon_guru.databinding.ActivityMapBinding
@@ -24,10 +25,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapBinding
-
-//    companion object {
-//        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,33 +52,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Korea and move the camera
-        val korea = LatLng(37.0, 126.0)
-        // 마커 : Map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(korea))
+        // 초기 카메라 위치 서울 설정
+        val seoul = LatLng(37.5665, 126.9780)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 12f))
+
+        // 카메라 위치 대한민국 내로 제한
+        val southKoreaBounds = LatLngBounds(
+            LatLng(33.0, 124.0), // Southwest corner
+            LatLng(39.0, 132.0)  // Northeast corner
+        )
+        mMap.setLatLngBoundsForCameraTarget(southKoreaBounds)
     }
-//
-//    override fun onMyLocationClick(location: Location) {
-//        Toast.makeText(this, "Current location:\n$location", Toast.LENGTH_LONG)
-//            .show()
-//    }
-//
-//    override fun onMyLocationButtonClick(): Boolean {
-//        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT)
-//            .show()
-//        // Return false so that we don't consume the event and the default behavior still occurs
-//        // (the camera animates to the user's current position).
-//        return false
-//    }
-//
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                setUpMap()
-//            } else {
-//                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
+
 }
