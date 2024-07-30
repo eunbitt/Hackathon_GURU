@@ -2,14 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hackathon_guru">
 
-    <!-- 카카오맵 사용을 위한 권한 설정 -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 맵 사용을 위한 권한 설정 -->
+
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- 위치정보 사용 권한 선언 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -20,20 +16,12 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Hackathon_GURU">
 
-
-        <meta-data
-            android:name="com.kakao.vectormap.APP_KEY"
-            android:value="58e8c8d2a35ff23dec33d33281011a29"/>
-
         <activity
             android:name=".MyScrapActivity"
             android:exported="false"/>
         <activity
             android:name=".MyScrapDetailActivity"
             android:exported="false"/>
-        <activity
-            android:name=".MapActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
