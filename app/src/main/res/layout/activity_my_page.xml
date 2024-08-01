@@ -93,9 +93,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="User"
                 android:background="@null"
                 android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/save_name_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="완료"/>
         </LinearLayout>
 
         <LinearLayout
@@ -120,9 +125,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="user0000@email.com"
                 android:background="@null"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:enabled="false"/>
         </LinearLayout>
 
         <TextView

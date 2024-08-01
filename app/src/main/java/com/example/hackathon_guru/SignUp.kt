@@ -6,15 +6,19 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.hackathon_guru.helpers.DatabaseHelper
 
 class SignUp : AppCompatActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        dbHelper = DatabaseHelper(this)
 
         val backButton: ImageView = findViewById(R.id.back_button)
         val nameEditText: EditText = findViewById(R.id.name)
@@ -69,9 +73,14 @@ class SignUp : AppCompatActivity() {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             } else if (!termsAccepted) {
                 Toast.makeText(this, "You must accept the terms and conditions", Toast.LENGTH_SHORT).show()
+            } else if (dbHelper.isEmailExists(email)) {
+                Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show()
+            } else if (dbHelper.isNameExists(name)) {
+                Toast.makeText(this, "Name already exists", Toast.LENGTH_SHORT).show()
             } else {
+                dbHelper.addUser(name, email, password)
                 Toast.makeText(this, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                // Add sign up logic here
+                finish() // Close the sign up activity
             }
         }
     }

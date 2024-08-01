@@ -14,21 +14,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#40C0DB</item>
         <item name="colorPrimaryDark">#40C0DB</item>
         <item name="colorAccent">#40C0DB</item>
     </style>
-<!-- Base application theme. -->
-<style name="Theme.Hackathon_GURU" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-    <!-- Primary brand color. -->
-    <item name="colorPrimary">@color/main_color</item>
-    <item name="colorOnPrimary">@color/white</item>
-    <!-- Secondary brand color. -->
-    <item name="colorSecondary">@color/button_color</item>
-    <item name="colorOnSecondary">@color/black</item>
-    <!-- Text appearance. -->
-    <item name="android:textColor">@color/black</item>
-    <item name="android:textSize">16sp</item>
-</style>
 </resources>
 

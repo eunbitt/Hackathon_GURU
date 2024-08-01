@@ -9,12 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.hackathon_guru.helpers.DatabaseHelper
 
 class Login : AppCompatActivity() {
+
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        dbHelper = DatabaseHelper(this)
 
         val emailEditText: EditText = findViewById(R.id.email)
         val passwordEditText: EditText = findViewById(R.id.password)
@@ -44,8 +49,15 @@ class Login : AppCompatActivity() {
 
             // Perform login action
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
-                // Add login logic here
+                if (dbHelper.getUser(email, password)) {
+                    Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MyPage::class.java)
+                    intent.putExtra("USER_EMAIL", email)
+                    startActivity(intent)
+                    finish() // Optional: Close the login activity
+                } else {
+                    Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             }
