@@ -1,53 +1,88 @@
 package com.example.hackathon_guru
 
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener
-import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.hackathon_guru.databinding.ActivityMapBinding
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompletePrediction
+import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.google.android.libraries.places.api.net.PlacesClient
+
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityMapBinding
+    private lateinit var placesClient: PlacesClient
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+    private lateinit var placeAdapter: PlaceAdapter
+    private val placeList = mutableListOf<AutocompletePrediction>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_map)
 
-        binding = ActivityMapBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // Places 초기화
+        Places.initialize(applicationContext, getString(R.string.MAPS_API_KEY))
+        placesClient = Places.createClient(this)
 
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(
+            R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val bottomSheet = findViewById<LinearLayout>(R.id.bottom_sheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+
+        placeAdapter = PlaceAdapter(placeList)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = placeAdapter
+        }
+
+
+        findViewById<Button>(R.id.restaurantBtn).setOnClickListener {
+            searchPlaces("식당")
+        }
+        findViewById<Button>(R.id.cafeBtn).setOnClickListener {
+            searchPlaces("카페")
+        }
+        findViewById<Button>(R.id.lodgingBtn).setOnClickListener {
+            searchPlaces("숙소")
+        }
+        findViewById<Button>(R.id.spotBtn).setOnClickListener {
+            searchPlaces("가볼만한곳")
+        }
+
+        val searchView = findViewById<SearchView>(R.id.searchBar)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    searchPlaces(it)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -64,4 +99,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setLatLngBoundsForCameraTarget(southKoreaBounds)
     }
 
+    private fun searchPlaces(query: String) {
+        val cameraPosition = mMap.cameraPosition.target
+        val bias = RectangularBounds.newInstance(
+            LatLng(cameraPosition.latitude - 0.05, cameraPosition.longitude - 0.05),
+            LatLng(cameraPosition.latitude + 0.05, cameraPosition.longitude + 0.05)
+        )
+        val request = FindAutocompletePredictionsRequest.builder()
+            .setQuery(query)
+            .setLocationBias(bias)  // 현재 카메라 위치로 검색을 제한합니다.
+            .build()
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
+            val predictions = response.autocompletePredictions
+            // 검색 결과를 bottomSheet에 표시하도록 합니다.
+            placeList.clear()
+            placeList.addAll(predictions)
+            placeAdapter.notifyDataSetChanged()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }.addOnFailureListener { exception ->
+            // 오류 처리
+        }
+    }
 }
