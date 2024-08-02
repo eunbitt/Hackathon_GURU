@@ -4,17 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ItemScrapFolderBinding
+import com.example.hackathon_guru.databinding.ItemScrapFolderOptionBinding
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 
-class FolderAdapter(private val folderList: MutableList<String>) : RecyclerView.Adapter<FolderAdapter.ViewHolder>() {
+class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: ItemScrapFolderBinding) : RecyclerView.ViewHolder(binding.root) {
+    var selectedFolder: String? = null
+
+    inner class FolderViewHolder(private val binding: ItemScrapFolderBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(folderName: String) {
             binding.textScrapFolderItemName.text = folderName
             binding.ScrapFolderItem.setOnClickListener {
@@ -116,13 +120,38 @@ class FolderAdapter(private val folderList: MutableList<String>) : RecyclerView.
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemScrapFolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    inner class FolderOptionViewHolder(private val binding: ItemScrapFolderOptionBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(folderName: String, isSelected: Boolean) {
+            binding.textView.text = folderName
+            binding.radioButton.isChecked = isSelected
+            binding.radioButton.setOnClickListener {
+                selectedFolder = folderName
+                notifyDataSetChanged() // 모든 항목을 다시 그려서 선택 상태를 업데이트
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(folderList[position])
+    override fun getItemViewType(position: Int): Int {
+        return if (selectedFolder == null) 0 else 1
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == 0) {
+            val binding = ItemScrapFolderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            FolderViewHolder(binding)
+        } else {
+            val binding = ItemScrapFolderOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            FolderOptionViewHolder(binding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is FolderViewHolder) {
+            holder.bind(folderList[position])
+        } else if (holder is FolderOptionViewHolder) {
+            val isSelected = folderList[position] == selectedFolder
+            holder.bind(folderList[position], isSelected)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -82,4 +82,33 @@ class MyScrapActivity : AppCompatActivity() {
             dialog.dismiss()
         }
     }
+
+    private fun showChooseFolderDialog() {
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.activity_my_scrap_choose_folder_dialog, null)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+
+        val dialog = builder.create()
+        dialog.show()
+
+        val closeButton: ImageButton = dialogView.findViewById(R.id.closeButton)
+        val addButton: ImageButton = dialogView.findViewById(R.id.addButton)
+        val folderRecyclerView: RecyclerView = dialogView.findViewById(R.id.folderRecyclerView)
+
+        val folderOptionAdapter = FolderAdapter(folderAdapter.folderList)
+        folderRecyclerView.layoutManager = LinearLayoutManager(this)
+        folderRecyclerView.adapter = folderOptionAdapter
+
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        addButton.setOnClickListener {
+            val selectedFolder = folderOptionAdapter.selectedFolder
+            // 선택된 폴더로 원하는 작업 수행
+            dialog.dismiss()
+        }
+    }
 }

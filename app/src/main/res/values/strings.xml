@@ -8,4 +8,5 @@
     <string name="MAPS_API_KEY">AIzaSyAsowPDDEVKf1HpXj0t1raLF85IIAjSBKg</string>
     <string name="place_name">name</string>
     <string name="place_address">address</string>
+    <string name="scrap_button_description">Scrap Button</string>
 </resources>
