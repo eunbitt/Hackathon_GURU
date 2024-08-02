@@ -15,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.RectangularBounds
@@ -30,7 +31,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var placeAdapter: PlaceAdapter
     private val placeList = mutableListOf<AutocompletePrediction>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -39,24 +39,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         Places.initialize(applicationContext, getString(R.string.MAPS_API_KEY))
         placesClient = Places.createClient(this)
 
-
+        // 지도 생성
         val mapFragment = supportFragmentManager.findFragmentById(
             R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        // 지도 오버레이 생성
         val bottomSheet = findViewById<LinearLayout>(R.id.bottom_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
         placeAdapter = PlaceAdapter(placeList)
 
+        // RecyclerView 설정
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = placeAdapter
         }
 
-
+        // 필터 설정 - 삭제 염두
         findViewById<Button>(R.id.restaurantBtn).setOnClickListener {
-            searchPlaces("식당")
+            searchPlaces("음식점")
         }
         findViewById<Button>(R.id.cafeBtn).setOnClickListener {
             searchPlaces("카페")

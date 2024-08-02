@@ -13,7 +13,6 @@ class PlaceAdapter(private val places: List<AutocompletePrediction>) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val placeName: TextView = itemView.findViewById(R.id.place_name)
         val placeAddress: TextView = itemView.findViewById(R.id.place_address)
-        val placeRate: TextView = itemView.findViewById(R.id.place_rate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
