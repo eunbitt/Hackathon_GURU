@@ -56,20 +56,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             adapter = placeAdapter
         }
 
-        // 필터 설정 - 삭제 염두
-        findViewById<Button>(R.id.restaurantBtn).setOnClickListener {
-            searchPlaces("음식점")
-        }
-        findViewById<Button>(R.id.cafeBtn).setOnClickListener {
-            searchPlaces("카페")
-        }
-        findViewById<Button>(R.id.lodgingBtn).setOnClickListener {
-            searchPlaces("숙소")
-        }
-        findViewById<Button>(R.id.spotBtn).setOnClickListener {
-            searchPlaces("가볼만한곳")
-        }
-
         val searchView = findViewById<SearchView>(R.id.searchBar)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

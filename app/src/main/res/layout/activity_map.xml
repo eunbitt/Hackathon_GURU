@@ -25,55 +25,13 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="6dp"
+            android:elevation="6dp"
             android:background="@drawable/box_border"
             android:closeIcon="@drawable/baseline_clear_24"
             android:iconifiedByDefault="false"
             android:queryBackground="@color/transparent"
             android:queryHint="@string/search" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/restaurantBtn"
-                android:layout_width="78dp"
-                android:layout_height="34dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/button_border"
-                android:fontFamily="@font/pretendardbold"
-                android:text="@string/restaurant" />
-
-            <Button
-                android:id="@+id/cafeBtn"
-                android:layout_width="78dp"
-                android:layout_height="34dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/button_border"
-                android:fontFamily="@font/pretendardbold"
-                android:text="@string/cafe" />
-
-            <Button
-                android:id="@+id/lodgingBtn"
-                android:layout_width="78dp"
-                android:layout_height="34dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/button_border"
-                android:fontFamily="@font/pretendardbold"
-                android:text="@string/lodging" />
-
-            <Button
-                android:id="@+id/spotBtn"
-                android:layout_width="78dp"
-                android:layout_height="34dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/button_border"
-                android:fontFamily="@font/pretendardbold"
-                android:text="@string/spot" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
