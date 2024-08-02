@@ -12,32 +12,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
+
+        <activity
+            android:name=".MyScrapFolderMoreButton"
+            android:exported="false" />
         <activity
             android:name=".MyScrapDeleteFolderDialog"
             android:exported="false" />
-        <activity
-            android:name=".item_scrap_folder"
-            android:exported="false" />
-        <activity
-            android:name=".MyScrapAddFolderDialog"
-            android:exported="false" />
+
         <activity
             android:name=".MyScrapActivity"
-            android:exported="false" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <activity
             android:name=".MyScrapDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MapActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

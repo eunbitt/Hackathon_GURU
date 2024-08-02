@@ -1,8 +1,6 @@
 package com.example.hackathon_guru
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
@@ -27,6 +25,7 @@ class MyScrapActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = folderAdapter
 
+        // Toolbar와 BottomNavigationView 설정
         binding.navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
@@ -73,6 +72,7 @@ class MyScrapActivity : AppCompatActivity() {
             val folderName = folderNameEditText.text.toString()
             if (folderName.isNotEmpty()) {
                 folderAdapter.addFolder(folderName)
+                folderNameEditText.text.clear() // 입력 필드 비우기
             }
             dialog.dismiss()
         }
