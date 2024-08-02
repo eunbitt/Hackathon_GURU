@@ -95,4 +95,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val selectQuery = "SELECT * FROM $TABLE_USERS WHERE $COLUMN_USER_EMAIL = '$email'"
         return db.rawQuery(selectQuery, null)
     }
+
+    fun deleteUser(email: String) {
+        val db = this.writableDatabase
+        val deleteQuery = "DELETE FROM $TABLE_USERS WHERE $COLUMN_USER_EMAIL = '$email'"
+        db.execSQL(deleteQuery)
+        db.close()
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.hackathon_guru
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -65,12 +66,25 @@ class MyPage : AppCompatActivity() {
 
         logoutText.setOnClickListener {
             Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-            // Add logic to logout
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
         }
 
         deleteAccountText.setOnClickListener {
-            Toast.makeText(this, "계정이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
-            // Add logic to delete account
+            AlertDialog.Builder(this).apply {
+                setTitle("계정 삭제")
+                setMessage("계정을 삭제하시겠습니까?")
+                setPositiveButton("예") { _, _ ->
+                    dbHelper.deleteUser(userEmail)
+                    Toast.makeText(this@MyPage, "계정이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@MyPage, Login::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                setNegativeButton("아니오", null)
+                show()
+            }
         }
 
         loadUserInfo()

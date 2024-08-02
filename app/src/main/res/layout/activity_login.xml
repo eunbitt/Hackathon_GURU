@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="330dp"
-        android:layout_height="470dp"
+        android:layout_height="400dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -28,7 +28,7 @@
             android:paddingBottom="16dp"
             android:text="Welcome !"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <EditText
@@ -39,8 +39,8 @@
             android:background="@drawable/rounded_edit_text"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:textSize="14sp" />
+            android:padding="15dp"
+            android:textSize="15sp" />
 
 
         <RelativeLayout
@@ -58,8 +58,8 @@
                 android:background="@drawable/rounded_edit_text"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="10dp"
-                android:textSize="14sp" />
+                android:padding="15dp"
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/confirm_password_toggle"
@@ -72,16 +72,6 @@
                 android:contentDescription="Toggle Password Visibility"
                 android:src="@drawable/ic_baseline_visibility_off_24" />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/forgot_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="14dp"
-            android:paddingTop="8dp"
-            android:text="@string/forgot_password"
-            android:textColor="#FF000000"
-            android:textSize="14sp" />
 
         <Button
             android:id="@+id/login_button"
@@ -106,21 +96,7 @@
             android:text="@string/register_text"
             android:textColor="#808080"
             android:textIsSelectable="true"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="16dp"
-            android:text="Or continue with"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="8dp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 </RelativeLayout>

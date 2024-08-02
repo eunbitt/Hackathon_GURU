@@ -25,7 +25,6 @@ class Login : AppCompatActivity() {
         val passwordEditText: EditText = findViewById(R.id.password)
         val passwordToggle: ImageView = findViewById(R.id.confirm_password_toggle)
         val loginButton: Button = findViewById(R.id.login_button)
-        val forgotPasswordText: TextView = findViewById(R.id.forgot_password)
         val registerText: TextView = findViewById(R.id.register_text)
 
         // Toggle password visibility
@@ -61,12 +60,6 @@ class Login : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        // Handle forgot password click
-        forgotPasswordText.setOnClickListener {
-            Toast.makeText(this, "Forgot password clicked", Toast.LENGTH_SHORT).show()
-            // Add forgot password logic here
         }
 
         // Handle register text click
