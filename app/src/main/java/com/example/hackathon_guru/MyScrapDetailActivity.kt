@@ -1,11 +1,50 @@
 package com.example.hackathon_guru
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.hackathon_guru.databinding.ActivityMyScrapDetailBinding
 
 class MyScrapDetailActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMyScrapDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_scrap_detail)
+        binding = ActivityMyScrapDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // BottomNavigationView 설정
+        binding.navigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_group -> {
+                    // Handle group navigation
+                    true
+                }
+                R.id.navigation_map -> {
+                    // Handle map navigation
+                    true
+                }
+                R.id.navigation_scrap -> {
+                    // Handle scrap navigation
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Intent로부터 폴더 이름을 가져옴
+        val folderName = intent.getStringExtra("FOLDER_NAME")
+        binding.folderNameTextView.text = folderName
+
+        // Back 버튼 클릭 리스너 설정
+        binding.backButton.setOnClickListener {
+            onBackPressed() // 이전 페이지로 이동
+        }
+
+        // Edit 버튼 클릭 리스너 설정
+        binding.editButton.setOnClickListener {
+            // 현재는 삭제 관련 기능 제거
+            // 필요시 폴더 세부 정보 수정 관련 코드를 여기에 추가
+        }
     }
 }
