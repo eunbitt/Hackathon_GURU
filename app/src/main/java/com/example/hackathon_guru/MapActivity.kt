@@ -1,5 +1,6 @@
 package com.example.hackathon_guru
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -30,6 +31,7 @@ import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -45,6 +47,28 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        // BottomNavigationView 설정
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_map // map 선택
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_group -> {
+                    // Handle group navigation
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapActivity::class.java))
+                    true
+                }
+                R.id.navigation_scrap -> {
+                    startActivity(Intent(this, MyScrapActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         // recyclerView 초기화
         recyclerView = findViewById(R.id.recycler_view)

@@ -1,8 +1,10 @@
 package com.example.hackathon_guru
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hackathon_guru.databinding.ActivityMyScrapDetailBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MyScrapDetailActivity : AppCompatActivity() {
 
@@ -14,18 +16,21 @@ class MyScrapDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // BottomNavigationView 설정
-        binding.navigationView.setOnNavigationItemSelectedListener { item ->
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_scrap // scrap 선택
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
                     // Handle group navigation
                     true
                 }
                 R.id.navigation_map -> {
-                    // Handle map navigation
+                    startActivity(Intent(this, MapActivity::class.java))
                     true
                 }
                 R.id.navigation_scrap -> {
-                    // Handle scrap navigation
+                    startActivity(Intent(this, MyScrapActivity::class.java))
                     true
                 }
                 else -> false

@@ -55,18 +55,7 @@
         app:layout_constraintTop_toTopOf="@+id/AddIcon"
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@drawable/nav_item_selector"
-        app:itemTextColor="@drawable/nav_item_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        app:itemTextAppearanceActive="@style/BottomNavigationView"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"/>
+    <include layout="@layout/bottom_navigation" />
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

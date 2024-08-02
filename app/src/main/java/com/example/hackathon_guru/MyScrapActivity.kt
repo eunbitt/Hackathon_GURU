@@ -1,5 +1,6 @@
 package com.example.hackathon_guru
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MyScrapActivity : AppCompatActivity() {
 
@@ -25,19 +27,22 @@ class MyScrapActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = folderAdapter
 
-        // Toolbar와 BottomNavigationView 설정
-        binding.navigationView.setOnNavigationItemSelectedListener { item ->
+        // BottomNavigationView 설정
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_scrap // scrap 선택
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
                     // Handle group navigation
                     true
                 }
                 R.id.navigation_map -> {
-                    // Handle map navigation
+                    startActivity(Intent(this, MapActivity::class.java))
                     true
                 }
                 R.id.navigation_scrap -> {
-                    // Handle scrap navigation
+                    startActivity(Intent(this, MyScrapActivity::class.java))
                     true
                 }
                 else -> false

@@ -52,18 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            app:itemIconTint="@drawable/nav_item_selector"
-            app:itemTextAppearanceActive="@style/BottomNavigationView"
-            app:itemTextAppearanceInactive="@style/BottomNavigationView"
-            app:itemTextColor="@drawable/nav_item_selector"
-            app:menu="@menu/bottom_navigation_menu"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <include layout="@layout/bottom_navigation" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
