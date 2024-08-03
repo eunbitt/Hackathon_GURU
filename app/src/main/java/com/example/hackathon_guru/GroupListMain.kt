@@ -32,7 +32,6 @@ class GroupListMain : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
-                    startActivity(Intent(this, GroupListMain::class.java))
                     true
                 }
                 R.id.navigation_map -> {

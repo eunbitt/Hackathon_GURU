@@ -10,19 +10,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import com.example.hackathon_guru.databinding.FragmentAddGroupDialogBinding
-import com.google.android.material.datepicker.MaterialDatePicker
-import java.text.SimpleDateFormat
-import java.util.*
 
 class AddGroupDialogFragment : DialogFragment() {
 
     private var _binding: FragmentAddGroupDialogBinding? = null
     private val binding get() = _binding!!
 
-    private var startDate: Long? = null
-    private var endDate: Long? = null
     private val members = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +37,8 @@ class AddGroupDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.selectDateEditText.setOnClickListener {
-            showDateRangePicker()
+            val dateRangePicker = DateRangePickerDialogFragment()
+            dateRangePicker.show(parentFragmentManager, "DateRangePickerDialogFragment")
         }
 
         binding.addButton.setOnClickListener {
@@ -52,12 +48,11 @@ class AddGroupDialogFragment : DialogFragment() {
             if (groupName.isEmpty() || dateRange.isEmpty() || members.isEmpty()) {
                 Toast.makeText(requireContext(), "그룹 정보를 작성해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-                val isPast = endDate?.let { it < System.currentTimeMillis() } ?: false
-                val newGroup = TravelGroup(groupName, dateRange, members, isPast)
+                val newGroup = TravelGroup(groupName, dateRange, members, false)
                 val result = Bundle().apply {
                     putParcelable("newGroup", newGroup)
                 }
-                setFragmentResult("addGroupRequestKey", result)
+                parentFragmentManager.setFragmentResult("addGroupRequestKey", result)
                 dismiss()
             }
         }
@@ -83,28 +78,13 @@ class AddGroupDialogFragment : DialogFragment() {
                 updateMemberList()
             }
         }
-    }
 
-    private fun showDateRangePicker() {
-        val datePicker = MaterialDatePicker.Builder.dateRangePicker()
-            .setTitleText("Travel Date Settings")
-            .setTheme(R.style.CustomDateRangePicker)
-            .build()
-
-        datePicker.addOnPositiveButtonClickListener { selection ->
-            startDate = selection.first
-            endDate = selection.second
-
-            if (startDate != null && endDate != null) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val startDateString = dateFormat.format(Date(startDate!!))
-                val endDateString = dateFormat.format(Date(endDate!!))
-
-                binding.selectDateEditText.setText(getString(R.string.date_range, startDateString, endDateString))
+        parentFragmentManager.setFragmentResultListener("dateRangePickerKey", this) { _, bundle ->
+            val selectedDateRange = bundle.getString("selectedDateRange")
+            selectedDateRange?.let {
+                binding.selectDateEditText.setText(it)
             }
         }
-
-        datePicker.show(parentFragmentManager, "DateRangePicker")
     }
 
     private fun updateMemberList() {

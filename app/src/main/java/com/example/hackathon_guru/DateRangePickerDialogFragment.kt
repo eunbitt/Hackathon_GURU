@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.hackathon_guru.databinding.FragmentAddGroupDialogBinding
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,25 +28,7 @@ class DateRangePickerDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.selectDateEditText.setOnClickListener {
-            showDateRangePicker()
-        }
-
-        binding.addButton.setOnClickListener {
-            val groupName = binding.groupNameEditText.text.toString()
-            val groupDate = binding.selectDateEditText.text.toString()
-
-            if (groupName.isEmpty() || groupDate.isEmpty()) {
-                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
-            } else {
-                // Add logic to save the new group
-                dismiss()
-            }
-        }
-
-        binding.closeButton.setOnClickListener {
-            dismiss()
-        }
+        showDateRangePicker()
     }
 
     private fun showDateRangePicker() {
@@ -60,12 +40,18 @@ class DateRangePickerDialogFragment : DialogFragment() {
         dateRangePicker.addOnPositiveButtonClickListener { datePicked ->
             val startDate = datePicked.first
             val endDate = datePicked.second
-            binding.selectDateEditText.setText(
-                "Start Date: ${dateFormat.format(Date(startDate!!))}\nEnd Date: ${dateFormat.format(Date(endDate!!))}"
+            val dateRangeString = "Start Date: ${dateFormat.format(Date(startDate!!))}\nEnd Date: ${dateFormat.format(Date(endDate!!))}"
+
+            parentFragmentManager.setFragmentResult(
+                "dateRangePickerKey",
+                Bundle().apply {
+                    putString("selectedDateRange", dateRangeString)
+                }
             )
+            dismiss()
         }
 
-        dateRangePicker.show(parentFragmentManager, "date_range_picker")
+        dateRangePicker.show(childFragmentManager, "date_range_picker")
     }
 
     override fun onDestroyView() {
@@ -73,4 +59,3 @@ class DateRangePickerDialogFragment : DialogFragment() {
         _binding = null
     }
 }
-

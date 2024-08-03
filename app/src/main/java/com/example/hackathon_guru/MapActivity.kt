@@ -58,7 +58,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
                 R.id.navigation_map -> {
-                    startActivity(Intent(this, MapActivity::class.java))
                     true
                 }
                 R.id.navigation_scrap -> {

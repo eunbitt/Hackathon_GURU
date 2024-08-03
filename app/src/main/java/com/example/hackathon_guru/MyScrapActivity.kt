@@ -40,14 +40,14 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
                 R.id.navigation_group -> {
                     startActivity(Intent(this, GroupListMain::class.java))
                     true
-                }                R.id.navigation_map -> {
+                }
+                R.id.navigation_map -> {
                     val intent = Intent(this, MapActivity::class.java)
                     intent.putStringArrayListExtra("scrapFolders", ArrayList(folderAdapter.getFolderList()))
                     startActivity(intent)
                     true
                 }
                 R.id.navigation_scrap -> {
-                    startActivity(Intent(this, MyScrapActivity::class.java))
                     true
                 }
                 else -> false
