@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="356dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close"
             android:src="@drawable/ic_close" />
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="359dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Add"
             android:src="@drawable/ic_check" />

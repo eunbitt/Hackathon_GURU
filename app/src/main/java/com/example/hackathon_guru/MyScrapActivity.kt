@@ -2,8 +2,6 @@ package com.example.hackathon_guru
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,8 +80,8 @@ class MyScrapActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val folderNames = sharedPreferences.getString("folders", "") ?: ""
         val folders = folderNames.split(",").filter { it.isNotEmpty() }
-        folderAdapter.folderList.clear()
-        folderAdapter.folderList.addAll(folders)
+        folderAdapter.clearfolders()
+        folderAdapter.addFolders(folders)
         folderAdapter.notifyDataSetChanged()
     }
 
@@ -123,3 +121,4 @@ class MyScrapActivity : AppCompatActivity() {
             .show()
     }
 }
+
