@@ -1,10 +1,11 @@
-package com.example.hackathon_guru
+package com.example.hackathon_guru.myscrap
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackathon_guru.R
 
 class ScrapFolderAdapter(
     private val folderItems: List<String>, // 폴더 이름 리스트

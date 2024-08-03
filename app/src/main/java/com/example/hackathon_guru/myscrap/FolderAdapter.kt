@@ -1,4 +1,4 @@
-package com.example.hackathon_guru
+package com.example.hackathon_guru.myscrap
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import com.example.hackathon_guru.R
 
 class FolderAdapter(private val folderList: MutableList<String>) : RecyclerView.Adapter<FolderAdapter.ViewHolder>() {
 

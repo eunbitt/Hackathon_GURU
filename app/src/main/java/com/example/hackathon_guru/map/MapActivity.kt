@@ -1,9 +1,8 @@
-package com.example.hackathon_guru
+package com.example.hackathon_guru.map
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackathon_guru.myscrap.MyScrapActivity
+import com.example.hackathon_guru.R
 import com.google.android.gms.common.api.ApiException
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,7 +24,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.PinConfig
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.Place
@@ -82,7 +82,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // 지도 생성
         val mapFragment = supportFragmentManager.findFragmentById(
-            R.id.map) as SupportMapFragment
+            R.id.map
+        ) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val searchView = findViewById<SearchView>(R.id.searchBar)
@@ -130,8 +131,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun searchPlaces(query: String) {
         val cameraPosition = mMap.cameraPosition.target
         val bias = RectangularBounds.newInstance(
-            LatLng(cameraPosition.latitude - 0.05, cameraPosition.longitude - 0.05),
-            LatLng(cameraPosition.latitude + 0.05, cameraPosition.longitude + 0.05)
+            LatLng(cameraPosition.latitude - 0.1, cameraPosition.longitude - 0.1),
+            LatLng(cameraPosition.latitude + 0.1, cameraPosition.longitude + 0.1)
         )
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
@@ -179,6 +180,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (marker != null) {
                     markers.add(marker)
                     Log.d("Marker", "Added marker at ${latLng.latitude}, ${latLng.longitude}")
+
+                    // 카메라를 첫 번째 결과의 위치로 이동
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
                 }
             }
         }.addOnFailureListener { exception ->

@@ -1,9 +1,11 @@
-package com.example.hackathon_guru
+package com.example.hackathon_guru.myscrap
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.hackathon_guru.R
 import com.example.hackathon_guru.databinding.ActivityMyScrapDetailBinding
+import com.example.hackathon_guru.map.MapActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MyScrapDetailActivity : AppCompatActivity() {

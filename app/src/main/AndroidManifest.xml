@@ -30,7 +30,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MapActivity"
+            android:name=".map.MapActivity"
             android:exported="true"
             android:label="@string/title_activity_map">
             <intent-filter> <!-- 메인 화면 맵페이지로 설정 -->
@@ -41,17 +41,17 @@
         </activity>
 
         <activity
-            android:name=".MyScrapFolderMoreButton"
+            android:name=".myscrap.MyScrapFolderMoreButton"
             android:exported="false" />
         <activity
-            android:name=".MyScrapDeleteFolderDialog"
+            android:name=".myscrap.MyScrapDeleteFolderDialog"
             android:exported="false" />
 
         <activity
-            android:name=".MyScrapActivity"
+            android:name=".myscrap.MyScrapActivity"
             android:exported="false" />
         <activity
-            android:name=".MyScrapDetailActivity"
+            android:name=".myscrap.MyScrapDetailActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

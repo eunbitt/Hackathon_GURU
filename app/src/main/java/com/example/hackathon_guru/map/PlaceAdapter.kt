@@ -1,10 +1,11 @@
-package com.example.hackathon_guru
+package com.example.hackathon_guru.map
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackathon_guru.R
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 
 class PlaceAdapter(private val places: List<AutocompletePrediction>) :

@@ -24,7 +24,7 @@
             android:text="새 폴더 추가"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/pretendardbold"/>
 
         <ImageButton
             android:id="@+id/closeButton"
@@ -52,6 +52,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/edittext_background"
         android:hint="Scrap Folder Name"
+        android:fontFamily="@font/pretendardregular"
         android:inputType="text"
         android:padding="12dp"
         android:textSize="16sp" />

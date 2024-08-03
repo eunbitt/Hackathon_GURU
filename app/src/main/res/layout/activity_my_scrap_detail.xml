@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyScrapDetailActivity">
+    tools:context=".myscrap.MyScrapDetailActivity">
 
     <!-- Toolbar for this Activity -->
     <androidx.appcompat.widget.Toolbar
@@ -28,7 +28,7 @@
         android:id="@+id/folderNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pretendardbold"
+        android:fontFamily="@font/pretendardsemibold"
         android:text="Folder Name"
         android:textColor="#FFFFFF"
         android:textSize="20sp"

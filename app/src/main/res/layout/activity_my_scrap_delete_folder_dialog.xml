@@ -31,7 +31,7 @@
                 android:text="폴더를 삭제하시겠습니까?"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/pretendardbold"/>
 
             <ImageButton
                 android:id="@+id/closeButton"
@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="예"
+            android:fontFamily="@font/pretendardregular"
             android:textSize="18sp" />
 
     </LinearLayout>
