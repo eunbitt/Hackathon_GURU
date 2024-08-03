@@ -45,6 +45,11 @@ class GroupAdapter(
 
         // Set click listener for edit icon
         holder.editIcon.setOnClickListener {
+            showGroupOptions(holder.editIcon, currentGroup)
+        }
+
+        // Set click listener for item view to open GroupDetailActivity
+        holder.itemView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, GroupDetailActivity::class.java).apply {
                 putExtra("groupName", currentGroup.name)
@@ -52,12 +57,6 @@ class GroupAdapter(
                 putExtra("groupMembers", currentGroup.members.toTypedArray())
             }
             context.startActivity(intent)
-        }
-
-        // Set long click listener for item view
-        holder.itemView.setOnLongClickListener {
-            showGroupOptions(holder.itemView, currentGroup)
-            true
         }
     }
 
@@ -68,7 +67,6 @@ class GroupAdapter(
         popup.inflate(R.menu.group_options_menu)
         popup.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.edit_group -> onGroupAction(group, "edit")
                 R.id.delete_group -> onGroupAction(group, "delete")
             }
             true

@@ -33,7 +33,7 @@ class GroupListMain : AppCompatActivity() {
 
 // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
-        bottomNavigationView.selectedItemId = R.id.navigation_group // map 선택
+        bottomNavigationView.selectedItemId = R.id.navigation_map // map 선택
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -57,7 +57,6 @@ class GroupListMain : AppCompatActivity() {
         binding.groupRecyclerView.layoutManager = LinearLayoutManager(this)
         groupAdapter = GroupAdapter(groupList) { group, action ->
             when (action) {
-                "edit" -> showEditGroupDialog(group)
                 "delete" -> showDeleteGroupDialog(group)
             }
         }
@@ -83,35 +82,6 @@ class GroupListMain : AppCompatActivity() {
         groupAdapter.notifyItemInserted(0)
         binding.groupRecyclerView.scrollToPosition(0) // 추가된 항목으로 스크롤
         saveGroups() // 그룹 목록을 저장
-    }
-
-    private fun showEditGroupDialog(group: TravelGroup) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_add_group, null)
-        val groupNameInput = dialogView.findViewById<TextInputEditText>(R.id.groupNameInput)
-        val groupDateInput = dialogView.findViewById<TextInputEditText>(R.id.groupDateInput)
-        val groupMembersInput = dialogView.findViewById<TextInputEditText>(R.id.groupMembersInput)
-
-        groupNameInput.setText(group.name)
-        groupDateInput.setText(group.dates)
-        groupMembersInput.setText(group.members.joinToString(","))
-
-        AlertDialog.Builder(this)
-            .setTitle("그룹 수정")
-            .setView(dialogView)
-            .setPositiveButton("수정") { dialog, _ ->
-                group.name = groupNameInput.text.toString()
-                group.dates = groupDateInput.text.toString()
-                group.members = groupMembersInput.text.toString().split(",").map { it.trim() }
-
-                groupAdapter.notifyDataSetChanged()
-                saveGroups() // 그룹 목록을 저장
-                dialog.dismiss()
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
     }
 
     private fun showDeleteGroupDialog(group: TravelGroup) {
