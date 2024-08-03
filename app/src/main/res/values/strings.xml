@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Triend</string>
-    <string name="kakao_app_key">58e8c8d2a35ff23dec33d33281011a29</string>
     <string name="edit_button">Edit</string>
     <string name="back_button">Back</string>
     <string name="search">Search</string>
@@ -8,4 +7,5 @@
     <string name="MAPS_API_KEY">AIzaSyAsowPDDEVKf1HpXj0t1raLF85IIAjSBKg</string>
     <string name="place_name">name</string>
     <string name="place_address">address</string>
+    <string name="scrap_button_description">Scrap Button</string>
 </resources>

@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/mint_uperbar">
 
@@ -21,17 +21,17 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="새 폴더 추가"
+            android:text="내 스크랩 목록"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:fontFamily="@font/pretendardbold"/>
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="353dp"
+            android:layout_marginEnd="356dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close"
             android:src="@drawable/ic_close" />
@@ -41,23 +41,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="354dp"
-            android:layout_marginEnd="1dp"
+            android:layout_marginStart="359dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Add"
             android:src="@drawable/ic_check" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/ScrapFolderNameEditText"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/folderRecyclerView_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edittext_background"
-        android:hint="Scrap Folder Name"
-        android:fontFamily="@font/pretendardregular"
-        android:inputType="text"
-        android:padding="12dp"
-        android:textSize="16sp" />
+        android:layout_marginTop="16dp"
+        android:visibility="visible" />
+
 </LinearLayout>

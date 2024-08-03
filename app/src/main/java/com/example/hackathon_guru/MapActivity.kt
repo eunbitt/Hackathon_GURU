@@ -1,20 +1,20 @@
-package com.example.hackathon_guru.map
+package com.example.hackathon_guru
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hackathon_guru.myscrap.MyScrapActivity
-import com.example.hackathon_guru.R
-import com.google.android.gms.common.api.ApiException
 
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.Place
@@ -33,7 +34,6 @@ import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRe
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -42,7 +42,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var recyclerView: RecyclerView
     private val placeList = mutableListOf<AutocompletePrediction>()
     private val markers = mutableListOf<Marker>()  // 마커 목록을 유지합니다.
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +69,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
+        // MyScrapActivity에서 저장한 폴더 정보를 SharedPreferences에서 불러오기
+        val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
+        val folderNames = sharedPreferences.getString("folders", "") ?: ""
+        val folders = folderNames.split(",").filter { it.isNotEmpty() }
+        // 폴더 목록을 이용하여 필요한 작업 수행
+        Log.d("MapActivity", "Loaded scrap folders: $folders")
+
         // recyclerView 초기화
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        placeAdapter = PlaceAdapter(placeList)
+
+        // PlaceAdapter 생성 시 scrapButton 클릭 리스너 추가
+        placeAdapter = PlaceAdapter(placeList) { place ->
+            // scrapButton 클릭 시 동작
+            handleScrapButtonClick(place)
+        }
         recyclerView.adapter = placeAdapter
 
         // Places 초기화
@@ -112,6 +123,37 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun showScrapDialog(place: AutocompletePrediction) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.activity_my_scrap_choose_folder_dialog)
+
+        // Close button
+        val closeButton: ImageButton = dialog.findViewById(R.id.closeButton)
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Add button
+        val addButton: ImageButton = dialog.findViewById(R.id.addButton)
+        addButton.setOnClickListener {
+            // Add button 클릭 시 처리 로직
+            // 예: 스크랩을 선택한 폴더에 추가하는 로직
+            dialog.dismiss() // 다이얼로그 닫기
+        }
+
+        // RecyclerView 설정
+        val folderRecyclerView: RecyclerView = dialog.findViewById(R.id.folderRecyclerView_option)
+        folderRecyclerView.layoutManager = LinearLayoutManager(this)
+        // 예를 들어, 폴더 목록을 표시하는 어댑터를 설정할 수 있습니다.
+        // folderRecyclerView.adapter = FolderAdapter(folderList)
+
+        dialog.show()
+    }
+
+    private fun handleScrapButtonClick(place: AutocompletePrediction) {
+        // Place 정보를 스크랩할 수 있는 다이얼로그 표시
+        showScrapDialog(place)
+    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap

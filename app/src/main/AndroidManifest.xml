@@ -4,8 +4,7 @@
 
     <!-- 구글 맵 api 사용을 위한 권한 설정 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -16,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".MyScrapChooseFolderDialog"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -30,28 +33,26 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".map.MapActivity"
-            android:exported="true"
-            android:label="@string/title_activity_map">
-            <intent-filter> <!-- 메인 화면 맵페이지로 설정 -->
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".MapActivity"
+            android:exported="true">
+        <intent-filter> <!-- 메인 화면 맵페이지로 설정 -->
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
         <activity
-            android:name=".myscrap.MyScrapFolderMoreButton"
+            android:name=".MyScrapFolderMoreButton"
             android:exported="false" />
         <activity
-            android:name=".myscrap.MyScrapDeleteFolderDialog"
+            android:name=".MyScrapDeleteFolderDialog"
             android:exported="false" />
 
         <activity
-            android:name=".myscrap.MyScrapActivity"
+            android:name=".MyScrapActivity"
             android:exported="false" />
         <activity
-            android:name=".myscrap.MyScrapDetailActivity"
+            android:name=".MyScrapDetailActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
