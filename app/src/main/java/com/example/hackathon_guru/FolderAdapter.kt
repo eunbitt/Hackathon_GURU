@@ -44,16 +44,17 @@ class FolderAdapter(
                 .create()
 
             val folderNameEditText = dialogView.findViewById<EditText>(R.id.ScrapFolderNameEditText)
-            folderNameEditText.setText(folderName)
+            folderNameEditText.setText(folderName) // 기존 폴더 이름을 EditText에 세팅
 
             dialogView.findViewById<ImageButton>(R.id.closeButton).setOnClickListener {
                 dialog.dismiss()
             }
 
             dialogView.findViewById<ImageButton>(R.id.addButton).setOnClickListener {
-                val newFolderName = folderNameEditText.text.toString().trim()
+                val newFolderName = folderNameEditText.text.toString().trim() // 공백 제거
                 if (newFolderName.isNotBlank()) {
                     if (isFolderNameDuplicate(newFolderName)) {
+                        // 중복된 이름인 경우, 사용자에게 알림 표시
                         showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
                     } else {
                         updateFolderName(folderName, newFolderName)
@@ -167,5 +168,16 @@ class FolderAdapter(
     // Public method to get folder list
     fun getFolderList(): List<String> {
         return folders
+    }
+
+    // 추가된 메소드들
+    fun clearFolders() {
+        folders.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addFolders(newFolders: List<String>) {
+        folders.addAll(newFolders)
+        notifyDataSetChanged()
     }
 }

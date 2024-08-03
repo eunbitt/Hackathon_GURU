@@ -70,6 +70,7 @@ class MyScrapActivity : AppCompatActivity() {
         }
     }
 
+    // 폴더 정보를 SharedPreferences에 저장하는 함수
     private fun saveFoldersToPreferences() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -78,17 +79,22 @@ class MyScrapActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    // 폴더 정보를 SharedPreferences에서 로드하는 함수
     private fun loadFoldersFromPreferences() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val folderNames = sharedPreferences.getString("folders", "") ?: ""
         val folders = folderNames.split(",").filter { it.isNotEmpty() }
-        folderAdapter.clearfolders()
-        folderAdapter.addFolder(folders)
+
+
+        folderAdapter.clearFolders()
+        folderAdapter.addFolders(folders)
+
         folderAdapter.notifyDataSetChanged()
     }
 
+    // 폴더 추가 다이얼로그 표시 함수
     private fun showAddFolderDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_folder_more_button, null)
+        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_add_folder_dialog, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()

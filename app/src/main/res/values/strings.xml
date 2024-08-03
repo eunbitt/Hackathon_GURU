@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Triend</string>
-    <string name="kakao_app_key">58e8c8d2a35ff23dec33d33281011a29</string>
     <string name="edit_button">Edit</string>
     <string name="back_button">Back</string>
     <string name="search">Search</string>

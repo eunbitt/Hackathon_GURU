@@ -1,22 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
-        android:layout_width="208dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/place_name"
-            android:layout_width="301dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="16dp"
-            android:layout_weight="1"
             android:fontFamily="@font/pretendardbold"
             android:hint="@string/place_name"
             android:textColor="@color/black"
@@ -26,9 +24,12 @@
             android:id="@+id/scrapButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/place_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/place_name"
             app:srcCompat="@drawable/ic_baseline_bookmark_border_24" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/place_address"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.hackathon_guru">
+
     <!-- 구글 맵 api 사용을 위한 권한 설정 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,28 +34,31 @@
 
         <activity
             android:name=".MapActivity"
-            android:exported="true"
-        android:label="@string/title_activity_map">
+            android:exported="true">
         <intent-filter> <!-- 메인 화면 맵페이지로 설정 -->
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
 
-    <activity
-        android:name=".MyScrapFolderMoreButton"
-        android:exported="false" />
-    <activity
-        android:name=".MyScrapDeleteFolderDialog"
-        android:exported="false" />
-    <activity
-        android:name=".MyScrapActivity"
-        android:exported="false" />
-    <activity
-        android:name=".MyScrapDetailActivity"
-        android:exported="false" />
-    <activity
-        android:name=".MainActivity"
-        android:exported="false" />
-</application>
-    </manifest>
+        <activity
+            android:name=".MyScrapFolderMoreButton"
+            android:exported="false" />
+        <activity
+            android:name=".MyScrapDeleteFolderDialog"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyScrapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyScrapDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+
+        </activity>
+    </application>
+
+</manifest>

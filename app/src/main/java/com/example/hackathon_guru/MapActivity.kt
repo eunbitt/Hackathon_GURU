@@ -4,22 +4,26 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.AdvancedMarkerOptions
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
@@ -88,7 +92,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         placesClient = Places.createClient(this)
 
         // 지도 생성
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(
+            R.id.map
+        ) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val searchView = findViewById<SearchView>(R.id.searchBar)
@@ -117,6 +123,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // 장소 정보를 스크랩할 수 있는 다이얼로그 표시
     private fun showScrapDialog(place: AutocompletePrediction) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.activity_my_scrap_choose_folder_dialog)
@@ -152,15 +159,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // 지도 클릭 시 마커 클릭 리스너 설정
-        mMap.setOnMarkerClickListener { marker ->
-            val place = marker.tag as? AutocompletePrediction
-            place?.let {
-                handleScrapButtonClick(it)
-            }
-            true // 클릭 이벤트가 처리되었음을 알림
-        }
-
         // 초기 카메라 위치 서울 설정
         val seoul = LatLng(37.5665, 126.9780)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 12f))
@@ -176,8 +174,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun searchPlaces(query: String) {
         val cameraPosition = mMap.cameraPosition.target
         val bias = RectangularBounds.newInstance(
-            LatLng(cameraPosition.latitude - 0.05, cameraPosition.longitude - 0.05),
-            LatLng(cameraPosition.latitude + 0.05, cameraPosition.longitude + 0.05)
+            LatLng(cameraPosition.latitude - 0.1, cameraPosition.longitude - 0.1),
+            LatLng(cameraPosition.latitude + 0.1, cameraPosition.longitude + 0.1)
         )
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
@@ -224,7 +222,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val marker = mMap.addMarker(advancedMarkerOptions)
                 if (marker != null) {
                     markers.add(marker)
-                    marker.tag = place // 마커에 장소 정보를 태그로 설정
+                    Log.d("Marker", "Added marker at ${latLng.latitude}, ${latLng.longitude}")
+
+                    // 카메라를 첫 번째 결과의 위치로 이동
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12f))
                 }
             }
         }.addOnFailureListener { exception ->
