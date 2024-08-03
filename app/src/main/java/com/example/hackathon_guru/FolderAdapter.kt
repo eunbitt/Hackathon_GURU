@@ -108,7 +108,7 @@ class FolderAdapter(
 
     inner class FolderOptionViewHolder(private val binding: ItemScrapFolderOptionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(folderName: String, isSelected: Boolean) {
-            binding.textView.text = folderName
+            binding.radioButton.text = folderName
             binding.radioButton.isChecked = isSelected
             binding.radioButton.setOnClickListener {
                 selectedFolder = folderName
