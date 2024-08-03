@@ -1,5 +1,6 @@
 package com.example.hackathon_guru
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupListMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class GroupListMain : AppCompatActivity() {
 
@@ -25,13 +28,17 @@ class GroupListMain : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바 타이틀 비활성화
 
-        // BottomNavigationView 설정
+        // Load groups from SharedPreferences
+        loadGroups()
+
+// BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
-        bottomNavigationView.selectedItemId = R.id.navigation_group // group 선택
+        bottomNavigationView.selectedItemId = R.id.navigation_group // map 선택
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
+                    // 이미 현재 화면이므로 아무 작업도 하지 않음
                     true
                 }
                 R.id.navigation_map -> {
@@ -75,6 +82,7 @@ class GroupListMain : AppCompatActivity() {
         groupList.add(0, group) // 새로운 그룹을 맨 위에 추가
         groupAdapter.notifyItemInserted(0)
         binding.groupRecyclerView.scrollToPosition(0) // 추가된 항목으로 스크롤
+        saveGroups() // 그룹 목록을 저장
     }
 
     private fun showEditGroupDialog(group: TravelGroup) {
@@ -88,14 +96,15 @@ class GroupListMain : AppCompatActivity() {
         groupMembersInput.setText(group.members.joinToString(","))
 
         AlertDialog.Builder(this)
-            .setTitle("         ")
+            .setTitle("그룹 수정")
             .setView(dialogView)
             .setPositiveButton("수정") { dialog, _ ->
                 group.name = groupNameInput.text.toString()
                 group.dates = groupDateInput.text.toString()
-                group.members = groupMembersInput.text.toString().split(",")
+                group.members = groupMembersInput.text.toString().split(",").map { it.trim() }
 
                 groupAdapter.notifyDataSetChanged()
+                saveGroups() // 그룹 목록을 저장
                 dialog.dismiss()
             }
             .setNegativeButton("취소") { dialog, _ ->
@@ -112,6 +121,7 @@ class GroupListMain : AppCompatActivity() {
             .setPositiveButton("삭제") { dialog, _ ->
                 groupList.remove(group)
                 groupAdapter.notifyDataSetChanged()
+                saveGroups() // 그룹 목록을 저장
                 dialog.dismiss()
             }
             .setNegativeButton("취소") { dialog, _ ->
@@ -119,5 +129,26 @@ class GroupListMain : AppCompatActivity() {
             }
             .create()
             .show()
+    }
+
+    private fun saveGroups() {
+        val sharedPreferences = getSharedPreferences("GroupListPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(groupList)
+        editor.putString("groupList", json)
+        editor.apply()
+    }
+
+    private fun loadGroups() {
+        val sharedPreferences = getSharedPreferences("GroupListPrefs", Context.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("groupList", null)
+        if (json != null) {
+            val type = object : TypeToken<MutableList<TravelGroup>>() {}.type
+            val savedGroupList: MutableList<TravelGroup> = gson.fromJson(json, type)
+            groupList.clear()
+            groupList.addAll(savedGroupList)
+        }
     }
 }
