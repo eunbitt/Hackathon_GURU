@@ -3,17 +3,41 @@ package com.example.hackathon_guru
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MyScrapDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyScrapDetailBinding
+    private lateinit var placeAdapter: PlaceAdapter
+    private val placeList = mutableListOf<PlaceData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyScrapDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val folderName = intent.getStringExtra("FOLDER_NAME") ?: return
+        binding.folderNameTextView.text = folderName
+
+        // SharedPreferences에서 폴더의 장소 정보 로드
+        val sharedPreferences = getSharedPreferences("MyScrapFolderPrefs", MODE_PRIVATE)
+        val savedPlaces = sharedPreferences.getStringSet(folderName, null)
+
+        // 장소 정보를 로드하여 placeList에 추가
+        savedPlaces?.forEach { place ->
+            val parts = place.split("|")
+            if (parts.size == 3) {
+                placeList.add(PlaceData(parts[0], parts[1], parts[2]))
+            }
+        }
+
+        // RecyclerView 초기화
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        placeAdapter = PlaceAdapter(placeList, showScrapButton = false) { /* 클릭 리스너 */ }
+        binding.recyclerView.adapter = placeAdapter
 
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
@@ -37,19 +61,12 @@ class MyScrapDetailActivity : AppCompatActivity() {
             }
         }
 
-        // Intent로부터 폴더 이름을 가져옴
-        val folderName = intent.getStringExtra("FOLDER_NAME")
-        binding.folderNameTextView.text = folderName
-
-        // Back 버튼 클릭 리스너 설정
         binding.backButton.setOnClickListener {
             onBackPressed() // 이전 페이지로 이동
         }
 
-        // Edit 버튼 클릭 리스너 설정
         binding.editButton.setOnClickListener {
-            // 현재는 삭제 관련 기능 제거
-            // 필요시 폴더 세부 정보 수정 관련 코드를 여기에 추가
+            // 폴더 편집 기능 구현
         }
     }
 }

@@ -13,9 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ItemScrapFolderBinding
 import com.example.hackathon_guru.databinding.ItemScrapFolderOptionBinding
 
+interface FolderUpdateListener {
+    fun onFolderListUpdated()
+}
+
 class FolderAdapter(
     private val context: Context,
-    private val folders: MutableList<String>
+    private val folders: MutableList<String>,
+    private val updateListener: FolderUpdateListener // 콜백 인터페이스 추가
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var selectedFolder: String? = null
@@ -71,13 +76,16 @@ class FolderAdapter(
             dialog.show()
         }
 
+        // 폴더 이름 업데이트
         private fun updateFolderName(oldName: String, newName: String) {
             val position = folders.indexOf(oldName)
             if (position != -1) {
                 folders[position] = newName
                 notifyItemChanged(position)
+                updateListener.onFolderListUpdated() // 폴더 목록 업데이트 콜백 호출
             }
         }
+
 
         private fun showDeleteConfirmationDialog(folderName: String) {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.activity_my_scrap_delete_folder_dialog, null)
@@ -97,11 +105,13 @@ class FolderAdapter(
             dialog.show()
         }
 
+        // 폴더 삭제
         private fun deleteFolder(folderName: String) {
             val position = folders.indexOf(folderName)
             if (position != -1) {
                 folders.removeAt(position)
                 notifyItemRemoved(position)
+                updateListener.onFolderListUpdated() // 폴더 목록 업데이트 콜백 호출
             }
         }
     }
@@ -150,6 +160,7 @@ class FolderAdapter(
         } else {
             folders.add(folderName)
             notifyItemInserted(folders.size - 1)
+            updateListener.onFolderListUpdated() // 폴더 목록 업데이트 콜백 호출
         }
     }
 

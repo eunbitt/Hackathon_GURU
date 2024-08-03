@@ -7,15 +7,16 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MyScrapActivity : AppCompatActivity() {
+class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpdateListener 인터페이스 추가
 
     private lateinit var binding: ActivityMyScrapBinding
     private lateinit var recyclerView: RecyclerView
-    private val folderAdapter = FolderAdapter(this, mutableListOf())
+    private val folderAdapter = FolderAdapter(this, mutableListOf(), this) // 콜백 전달
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,7 @@ class MyScrapActivity : AppCompatActivity() {
 
         // RecyclerView 초기화
         recyclerView = binding.recyclerView
-        // 열 수를 지정하여 GridLayoutManager로 변경 (예: 2열)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(this, 2) // 그리드 레이아웃 매니저 사용, spanCount = 2
         recyclerView.adapter = folderAdapter
 
         // BottomNavigationView 설정
@@ -71,7 +71,6 @@ class MyScrapActivity : AppCompatActivity() {
         }
     }
 
-    // 폴더 정보를 SharedPreferences에 저장하는 함수
     private fun saveFoldersToPreferences() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -80,7 +79,6 @@ class MyScrapActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    // 폴더 정보를 SharedPreferences에서 로드하는 함수
     private fun loadFoldersFromPreferences() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val folderNames = sharedPreferences.getString("folders", "") ?: ""
@@ -89,9 +87,8 @@ class MyScrapActivity : AppCompatActivity() {
         folderAdapter.addFolders(folders)
     }
 
-    // 폴더 추가 다이얼로그 표시 함수
     private fun showAddFolderDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_add_folder_dialog, null)
+        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_folder_more_button, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
@@ -125,5 +122,9 @@ class MyScrapActivity : AppCompatActivity() {
             .setPositiveButton("확인", null)
             .show()
     }
-}
 
+    // FolderUpdateListener 인터페이스 구현
+    override fun onFolderListUpdated() {
+        saveFoldersToPreferences()
+    }
+}

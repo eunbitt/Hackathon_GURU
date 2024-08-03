@@ -1,38 +1,52 @@
 package com.example.hackathon_guru
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.libraries.places.api.model.AutocompletePrediction
+import com.example.hackathon_guru.databinding.ItemScrapedPlaceBinding
+import com.example.hackathon_guru.databinding.PlaceItemBinding
+
+data class PlaceData(val id: String, val name: String, val address: String)
 
 class PlaceAdapter(
-    private val places: List<AutocompletePrediction>,
-    private val onScrapButtonClick: (AutocompletePrediction) -> Unit
-) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+    private val places: List<PlaceData>,
+    private val showScrapButton: Boolean = true,
+    private val onScrapButtonClick: ((PlaceData) -> Unit)? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val placeName: TextView = itemView.findViewById(R.id.place_name)
-        val placeAddress: TextView = itemView.findViewById(R.id.place_address)
-        val scrapButton: ImageView = itemView.findViewById(R.id.scrapButton)
+    inner class ViewHolderWithButton(private val binding: PlaceItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(place: PlaceData) {
+            binding.placeName.text = place.name
+            binding.placeAddress.text = place.address
+            binding.scrapButton.setOnClickListener {
+                onScrapButtonClick?.invoke(place)
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.place_item, parent, false)
-        return ViewHolder(view)
+    inner class ViewHolderWithoutButton(private val binding: ItemScrapedPlaceBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(place: PlaceData) {
+            binding.placeName.text = place.name
+            binding.placeAddress.text = place.address
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (showScrapButton) {
+            val binding = PlaceItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewHolderWithButton(binding)
+        } else {
+            val binding = ItemScrapedPlaceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewHolderWithoutButton(binding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val place = places[position]
-        holder.placeName.text = place.getPrimaryText(null).toString()
-        holder.placeAddress.text = place.getSecondaryText(null).toString()
-
-        // scrapButton 클릭 리스너 설정
-        holder.scrapButton.setOnClickListener {
-            onScrapButtonClick(place)
+        if (holder is ViewHolderWithButton) {
+            holder.bind(place)
+        } else if (holder is ViewHolderWithoutButton) {
+            holder.bind(place)
         }
     }
 

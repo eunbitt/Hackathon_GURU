@@ -11,7 +11,7 @@ class OptionAdapter(
     private val onFolderSelected: (String) -> Unit
 ) : RecyclerView.Adapter<OptionAdapter.ViewHolder>() {
 
-    private var selectedPosition = -1
+    var selectedPosition = -1
 
     inner class ViewHolder(private val binding: ItemScrapFolderOptionBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(folderName: String, position: Int) {

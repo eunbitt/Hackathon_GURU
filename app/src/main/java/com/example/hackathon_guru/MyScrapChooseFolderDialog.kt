@@ -15,6 +15,7 @@ class MyScrapChooseFolderDialog(
 
     private lateinit var binding: ActivityMyScrapChooseFolderDialogBinding
     private lateinit var dialogContext: Context
+    private lateinit var optionAdapter: OptionAdapter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         binding = ActivityMyScrapChooseFolderDialogBinding.inflate(requireActivity().layoutInflater)
@@ -25,9 +26,8 @@ class MyScrapChooseFolderDialog(
 
         // RecyclerView 설정
         val folderRecyclerView = binding.folderRecyclerViewOption
-        val optionAdapter = OptionAdapter(folderList) { selectedFolder ->
+        optionAdapter = OptionAdapter(folderList) { selectedFolder ->
             onFolderSelected(selectedFolder)
-            dialog.dismiss()
         }
         folderRecyclerView.adapter = optionAdapter
         folderRecyclerView.layoutManager = LinearLayoutManager(dialogContext)
@@ -35,6 +35,15 @@ class MyScrapChooseFolderDialog(
         // 닫기 버튼 클릭 리스너 설정
         binding.closeButton.setOnClickListener {
             dialog.dismiss()
+        }
+
+        binding.addButton.setOnClickListener {
+            // 선택된 폴더를 콜백으로 전달
+            val selectedPosition = optionAdapter.selectedPosition
+            if (selectedPosition != -1) {
+                onFolderSelected(folderList[selectedPosition])
+                dialog.dismiss()
+            }
         }
 
         return dialog

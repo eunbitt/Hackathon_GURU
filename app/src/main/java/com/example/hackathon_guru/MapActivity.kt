@@ -80,7 +80,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // PlaceAdapter 생성 시 scrapButton 클릭 리스너 추가
-        placeAdapter = PlaceAdapter(placeList) { place ->
+        placeAdapter = PlaceAdapter(convertToPlaceDataList(placeList), showScrapButton = true) { place ->
             // scrapButton 클릭 시 동작
             handleScrapButtonClick(place)
         }
@@ -120,6 +120,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // AutocompletePrediction 리스트를 PlaceData 리스트로 변환하는 함수
+    private fun convertToPlaceDataList(predictions: List<AutocompletePrediction>): List<PlaceData> {
+        return predictions.map {
+            PlaceData(it.placeId, it.getPrimaryText(null).toString(), it.getSecondaryText(null).toString())
+        }
+    }
+
     // 장소 정보를 스크랩할 수 있는 다이얼로그 표시
     private fun showScrapDialog(place: AutocompletePrediction) {
         val dialog = MyScrapChooseFolderDialog(scrapFolders ?: listOf()) { selectedFolder ->
@@ -128,9 +135,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         dialog.show(supportFragmentManager, "ChooseFolderDialog")
     }
 
-    private fun handleScrapButtonClick(place: AutocompletePrediction) {
+    private fun handleScrapButtonClick(place: PlaceData) {
         // Place 정보를 스크랩할 수 있는 다이얼로그 표시
-        showScrapDialog(place)
+        val prediction = placeList.find { it.placeId == place.id }
+        if (prediction != null) {
+            showScrapDialog(prediction)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -164,6 +174,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             val predictions = response.autocompletePredictions
             placeList.clear()
             placeList.addAll(predictions)
+            placeAdapter = PlaceAdapter(convertToPlaceDataList(placeList), showScrapButton = true) { place ->
+                handleScrapButtonClick(place)
+            }
+            recyclerView.adapter = placeAdapter
             placeAdapter.notifyDataSetChanged()
             recyclerView.visibility = View.VISIBLE
 
@@ -222,20 +236,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     // 장소 정보를 폴더에 저장하는 함수
     private fun savePlaceToFolder(place: AutocompletePrediction, folderName: String) {
-        // 여기서 장소를 선택한 폴더에 저장하는 로직을 구현합니다.
-        // 예를 들어, SharedPreferences나 데이터베이스에 장소 정보를 저장할 수 있습니다.
         val placeId = place.placeId
         val placeName = place.getPrimaryText(null).toString()
-        // 장소 정보를 저장 (예시로 SharedPreferences 사용)
+        val placeAddress = place.getSecondaryText(null).toString()
+
         val sharedPreferences = getSharedPreferences("MyScrapFolderPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val savedPlaces = sharedPreferences.getStringSet(folderName, mutableSetOf()) ?: mutableSetOf()
-        savedPlaces.add("$placeId|$placeName")
+        savedPlaces.add("$placeId|$placeName|$placeAddress")
         editor.putStringSet(folderName, savedPlaces)
         editor.apply()
 
         Log.d("MapActivity", "Saved place $placeName to folder $folderName")
     }
+
 
     // 벡터 drawable을 비트맵으로 변환하는 함수
     private fun getBitmapFromVectorDrawable(drawableId: Int): Bitmap {
