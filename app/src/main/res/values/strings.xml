@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Triend</string>
     <string name="edit_button">Edit</string>
+    <string name="group_scrap">Group Scrap</string>
     <string name="back_button">Back</string>
     <string name="search">Search</string>
     <string name="title_activity_map">MapActivity</string>

@@ -11,12 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="?attr/colorPrimary"
-        android:gravity="center"
-        android:title="My Travel Group"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -27,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pretendardsemibold"
-        android:text="My Travel Group"
+        android:text="Group Name"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
@@ -47,32 +42,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
-
-
-    <ImageView
-        android:id="@+id/UserIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toStartOf="@+id/GroupScrap"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/toolbar_title"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@drawable/ic_user" />
-
     <ImageView
         android:id="@+id/GroupScrap"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/UserIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/UserIcon"
         app:srcCompat="@drawable/ic_folder" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scheduleRecyclerView"

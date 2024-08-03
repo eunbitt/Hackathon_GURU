@@ -22,9 +22,6 @@ class GroupDetailActivity : AppCompatActivity() {
         binding = ActivityGroupDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 툴바를 액션바로 설정
-        setSupportActionBar(binding.toolbar)
-
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
         bottomNavigationView.selectedItemId = R.id.navigation_group // group 선택
@@ -56,6 +53,11 @@ class GroupDetailActivity : AppCompatActivity() {
 
         // 리사이클러뷰 설정
         setupRecyclerView()
+
+        binding.backButton.setOnClickListener {
+            onBackPressed() // 이전 페이지로 이동
+        }
+
     }
 
     private fun setupRecyclerView() {
