@@ -85,12 +85,8 @@ class MyScrapActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
         val folderNames = sharedPreferences.getString("folders", "") ?: ""
         val folders = folderNames.split(",").filter { it.isNotEmpty() }
-
-
         folderAdapter.clearFolders()
         folderAdapter.addFolders(folders)
-
-        folderAdapter.notifyDataSetChanged()
     }
 
     // 폴더 추가 다이얼로그 표시 함수
@@ -130,3 +126,4 @@ class MyScrapActivity : AppCompatActivity() {
             .show()
     }
 }
+
