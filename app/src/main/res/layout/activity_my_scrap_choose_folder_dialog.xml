@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/mint_uperbar">
 
@@ -46,10 +46,10 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/folderRecyclerView"
+        android:id="@+id/folderRecyclerView_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:visibility="invisible" />
+        android:visibility="visible" />
+
 </LinearLayout>

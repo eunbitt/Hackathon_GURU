@@ -4,26 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.RadioButton
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
-import com.example.hackathon_guru.databinding.ItemScrapFolderBinding
-import com.example.hackathon_guru.databinding.ItemScrapFolderOptionBinding
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
+import com.example.hackathon_guru.databinding.ItemScrapFolderBinding
+import com.example.hackathon_guru.databinding.ItemScrapFolderOptionBinding
 
-class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FolderAdapter(
+    private val context: Context,
+    private val folders: MutableList<String>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var selectedFolder: String? = null
+    var isSelectingFolder: Boolean = false
 
     inner class FolderViewHolder(private val binding: ItemScrapFolderBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(folderName: String) {
             binding.textScrapFolderItemName.text = folderName
             binding.ScrapFolderItem.setOnClickListener {
                 // 폴더 클릭 시, 세부 페이지로 이동
-                val context = binding.root.context
                 val intent = Intent(context, MyScrapDetailActivity::class.java).apply {
                     putExtra("FOLDER_NAME", folderName)
                 }
@@ -36,26 +38,23 @@ class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<
         }
 
         private fun showFolderOptionsDialog(folderName: String) {
-            val context = binding.root.context
             val dialogView = LayoutInflater.from(context).inflate(R.layout.activity_my_scrap_folder_more_button, null)
-
             val dialog = AlertDialog.Builder(context)
                 .setView(dialogView)
                 .create()
 
             val folderNameEditText = dialogView.findViewById<EditText>(R.id.ScrapFolderNameEditText)
-            folderNameEditText.setText(folderName) // 기존 폴더 이름을 EditText에 세팅
+            folderNameEditText.setText(folderName)
 
             dialogView.findViewById<ImageButton>(R.id.closeButton).setOnClickListener {
                 dialog.dismiss()
             }
 
             dialogView.findViewById<ImageButton>(R.id.addButton).setOnClickListener {
-                val newFolderName = folderNameEditText.text.toString().trim() // 공백 제거
+                val newFolderName = folderNameEditText.text.toString().trim()
                 if (newFolderName.isNotBlank()) {
                     if (isFolderNameDuplicate(newFolderName)) {
-                        // 중복된 이름인 경우, 사용자에게 알림 표시
-                        showAlertDialog(context, "폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
+                        showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
                     } else {
                         updateFolderName(folderName, newFolderName)
                         dialog.dismiss()
@@ -72,17 +71,15 @@ class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<
         }
 
         private fun updateFolderName(oldName: String, newName: String) {
-            val position = folderList.indexOf(oldName)
+            val position = folders.indexOf(oldName)
             if (position != -1) {
-                folderList[position] = newName
+                folders[position] = newName
                 notifyItemChanged(position)
             }
         }
 
         private fun showDeleteConfirmationDialog(folderName: String) {
-            val context = binding.root.context
             val dialogView = LayoutInflater.from(context).inflate(R.layout.activity_my_scrap_delete_folder_dialog, null)
-
             val dialog = AlertDialog.Builder(context)
                 .setView(dialogView)
                 .create()
@@ -100,23 +97,11 @@ class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<
         }
 
         private fun deleteFolder(folderName: String) {
-            val position = folderList.indexOf(folderName)
+            val position = folders.indexOf(folderName)
             if (position != -1) {
-                folderList.removeAt(position)
+                folders.removeAt(position)
                 notifyItemRemoved(position)
             }
-        }
-
-        private fun isFolderNameDuplicate(newName: String): Boolean {
-            return folderList.contains(newName)
-        }
-
-        private fun showAlertDialog(context: Context, title: String, message: String) {
-            AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("확인", null)
-                .show()
         }
     }
 
@@ -126,13 +111,13 @@ class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<
             binding.radioButton.isChecked = isSelected
             binding.radioButton.setOnClickListener {
                 selectedFolder = folderName
-                notifyDataSetChanged() // 모든 항목을 다시 그려서 선택 상태를 업데이트
+                notifyDataSetChanged()
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (selectedFolder == null) 0 else 1
+        return if (isSelectingFolder) 1 else 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -147,19 +132,40 @@ class FolderAdapter(val folderList: MutableList<String>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FolderViewHolder) {
-            holder.bind(folderList[position])
+            holder.bind(folders[position])
         } else if (holder is FolderOptionViewHolder) {
-            val isSelected = folderList[position] == selectedFolder
-            holder.bind(folderList[position], isSelected)
+            val isSelected = folders[position] == selectedFolder
+            holder.bind(folders[position], isSelected)
         }
     }
 
     override fun getItemCount(): Int {
-        return folderList.size
+        return folders.size
     }
 
     fun addFolder(folderName: String) {
-        folderList.add(folderName)
-        notifyItemInserted(folderList.size - 1)
+        if (isFolderNameDuplicate(folderName)) {
+            showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
+        } else {
+            folders.add(folderName)
+            notifyItemInserted(folders.size - 1)
+        }
+    }
+
+    fun isFolderNameDuplicate(folderName: String): Boolean {
+        return folders.contains(folderName)
+    }
+
+    private fun showAlertDialog(title: String, message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("확인", null)
+            .show()
+    }
+
+    // Public method to get folder list
+    fun getFolderList(): List<String> {
+        return folders
     }
 }

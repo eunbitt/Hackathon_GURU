@@ -20,12 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.AdvancedMarkerOptions
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.Place
@@ -46,7 +41,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map) // 수정된 레이아웃 설정
+        setContentView(R.layout.activity_map)
 
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
@@ -69,6 +64,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 else -> false
             }
         }
+
+        // MyScrapActivity에서 저장한 폴더 정보를 SharedPreferences에서 불러오기
+        val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
+        val folderNames = sharedPreferences.getString("folders", "") ?: ""
+        val folders = folderNames.split(",").filter { it.isNotEmpty() }
+        // 폴더 목록을 이용하여 필요한 작업 수행
+        Log.d("MapActivity", "Loaded scrap folders: $folders")
 
         // recyclerView 초기화
         recyclerView = findViewById(R.id.recycler_view)
@@ -134,7 +136,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // RecyclerView 설정
-        val folderRecyclerView: RecyclerView = dialog.findViewById(R.id.folderRecyclerView)
+        val folderRecyclerView: RecyclerView = dialog.findViewById(R.id.folderRecyclerView_option)
         folderRecyclerView.layoutManager = LinearLayoutManager(this)
         // 예를 들어, 폴더 목록을 표시하는 어댑터를 설정할 수 있습니다.
         // folderRecyclerView.adapter = FolderAdapter(folderList)

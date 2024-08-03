@@ -15,12 +15,15 @@ class MyScrapActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyScrapBinding
     private lateinit var recyclerView: RecyclerView
-    private val folderAdapter = FolderAdapter(mutableListOf())
+    private val folderAdapter = FolderAdapter(this, mutableListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyScrapBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 폴더 정보를 SharedPreferences에서 로드
+        loadFoldersFromPreferences()
 
         // RecyclerView 초기화
         recyclerView = binding.recyclerView
@@ -29,16 +32,15 @@ class MyScrapActivity : AppCompatActivity() {
 
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
-        bottomNavigationView.selectedItemId = R.id.navigation_scrap // scrap 선택
+        bottomNavigationView.selectedItemId = R.id.navigation_scrap
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_group -> {
-                    // Handle group navigation
-                    true
-                }
+                R.id.navigation_group -> true
                 R.id.navigation_map -> {
-                    startActivity(Intent(this, MapActivity::class.java))
+                    val intent = Intent(this, MapActivity::class.java)
+                    intent.putStringArrayListExtra("scrapFolders", ArrayList(folderAdapter.getFolderList()))
+                    startActivity(intent)
                     true
                 }
                 R.id.navigation_scrap -> {
@@ -53,62 +55,71 @@ class MyScrapActivity : AppCompatActivity() {
         binding.AddIcon.setOnClickListener {
             showAddFolderDialog()
         }
+
+        // Fragment 결과 수신 설정
+        supportFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
+            val folderName = bundle.getString("folderName")
+            if (folderName != null) {
+                if (!folderAdapter.isFolderNameDuplicate(folderName)) {
+                    folderAdapter.addFolder(folderName)
+                    saveFoldersToPreferences()
+                } else {
+                    showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
+                }
+            }
+        }
+    }
+
+    private fun saveFoldersToPreferences() {
+        val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val folderNames = folderAdapter.getFolderList().joinToString(separator = ",")
+        editor.putString("folders", folderNames)
+        editor.apply()
+    }
+
+    private fun loadFoldersFromPreferences() {
+        val sharedPreferences = getSharedPreferences("MyScrapPrefs", MODE_PRIVATE)
+        val folderNames = sharedPreferences.getString("folders", "") ?: ""
+        val folders = folderNames.split(",").filter { it.isNotEmpty() }
+        folderAdapter.folderList.clear()
+        folderAdapter.folderList.addAll(folders)
+        folderAdapter.notifyDataSetChanged()
     }
 
     private fun showAddFolderDialog() {
-        val inflater = layoutInflater
-        val dialogView = inflater.inflate(R.layout.activity_my_scrap_add_folder_dialog, null)
+        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_folder_more_button, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
 
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
+        val folderNameEditText = dialogView.findViewById<EditText>(R.id.ScrapFolderNameEditText)
 
-        val dialog = builder.create()
-        dialog.show()
-
-        val closeButton: ImageButton = dialogView.findViewById(R.id.closeButton)
-        val addButton: ImageButton = dialogView.findViewById(R.id.addButton)
-        val folderNameEditText: EditText = dialogView.findViewById(R.id.ScrapFolderNameEditText)
-
-        closeButton.setOnClickListener {
+        dialogView.findViewById<ImageButton>(R.id.closeButton).setOnClickListener {
             dialog.dismiss()
         }
 
-        addButton.setOnClickListener {
-            val folderName = folderNameEditText.text.toString()
-            if (folderName.isNotEmpty()) {
-                folderAdapter.addFolder(folderName)
-                folderNameEditText.text.clear() // 입력 필드 비우기
+        dialogView.findViewById<ImageButton>(R.id.addButton).setOnClickListener {
+            val folderName = folderNameEditText.text.toString().trim()
+            if (folderName.isNotBlank()) {
+                if (!folderAdapter.isFolderNameDuplicate(folderName)) {
+                    folderAdapter.addFolder(folderName)
+                    saveFoldersToPreferences()
+                    dialog.dismiss()
+                } else {
+                    showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
+                }
             }
-            dialog.dismiss()
         }
+
+        dialog.show()
     }
 
-    private fun showChooseFolderDialog() {
-        val inflater = layoutInflater
-        val dialogView = inflater.inflate(R.layout.activity_my_scrap_choose_folder_dialog, null)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-
-        val dialog = builder.create()
-        dialog.show()
-
-        val closeButton: ImageButton = dialogView.findViewById(R.id.closeButton)
-        val addButton: ImageButton = dialogView.findViewById(R.id.addButton)
-        val folderRecyclerView: RecyclerView = dialogView.findViewById(R.id.folderRecyclerView)
-
-        val folderOptionAdapter = FolderAdapter(folderAdapter.folderList)
-        folderRecyclerView.layoutManager = LinearLayoutManager(this)
-        folderRecyclerView.adapter = folderOptionAdapter
-
-        closeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        addButton.setOnClickListener {
-            val selectedFolder = folderOptionAdapter.selectedFolder
-            // 선택된 폴더로 원하는 작업 수행
-            dialog.dismiss()
-        }
+    private fun showAlertDialog(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("확인", null)
+            .show()
     }
 }
