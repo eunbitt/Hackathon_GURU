@@ -6,7 +6,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -27,7 +27,8 @@ class MyScrapActivity : AppCompatActivity() {
 
         // RecyclerView 초기화
         recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        // 열 수를 지정하여 GridLayoutManager로 변경 (예: 2열)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = folderAdapter
 
         // BottomNavigationView 설정
@@ -129,4 +130,3 @@ class MyScrapActivity : AppCompatActivity() {
             .show()
     }
 }
-
