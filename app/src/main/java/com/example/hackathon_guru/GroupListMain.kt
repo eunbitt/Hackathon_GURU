@@ -1,11 +1,13 @@
 package com.example.hackathon_guru
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupListMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 
 class GroupListMain : AppCompatActivity() {
@@ -22,6 +24,28 @@ class GroupListMain : AppCompatActivity() {
         // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바 타이틀 비활성화
+
+        // BottomNavigationView 설정
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_group // group 선택
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_group -> {
+                    startActivity(Intent(this, GroupListMain::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapActivity::class.java))
+                    true
+                }
+                R.id.navigation_scrap -> {
+                    startActivity(Intent(this, MyScrapActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Setup RecyclerView
         binding.groupRecyclerView.layoutManager = LinearLayoutManager(this)

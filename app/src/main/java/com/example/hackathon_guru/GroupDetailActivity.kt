@@ -1,12 +1,14 @@
 package com.example.hackathon_guru
 
 import Schedule
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupDetailBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 
 class GroupDetailActivity : AppCompatActivity() {
@@ -22,6 +24,28 @@ class GroupDetailActivity : AppCompatActivity() {
 
         // 툴바를 액션바로 설정
         setSupportActionBar(binding.toolbar)
+
+        // BottomNavigationView 설정
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_group // group 선택
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_group -> {
+                    startActivity(Intent(this, GroupListMain::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapActivity::class.java))
+                    true
+                }
+                R.id.navigation_scrap -> {
+                    startActivity(Intent(this, MyScrapActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
 
         // 인텐트로 전달된 그룹 이름을 받아서 툴바 제목으로 설정
         val groupName = intent.getStringExtra("groupName")

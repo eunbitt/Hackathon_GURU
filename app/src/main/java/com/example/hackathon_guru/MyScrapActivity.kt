@@ -37,8 +37,10 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_group -> true
-                R.id.navigation_map -> {
+                R.id.navigation_group -> {
+                    startActivity(Intent(this, GroupListMain::class.java))
+                    true
+                }                R.id.navigation_map -> {
                     val intent = Intent(this, MapActivity::class.java)
                     intent.putStringArrayListExtra("scrapFolders", ArrayList(folderAdapter.getFolderList()))
                     startActivity(intent)
