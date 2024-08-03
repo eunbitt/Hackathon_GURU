@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hackathon_guru.helpers.DatabaseHelper
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MyPage : AppCompatActivity() {
 
@@ -88,6 +89,28 @@ class MyPage : AppCompatActivity() {
         }
 
         loadUserInfo()
+
+        // BottomNavigationView 설정
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        bottomNavigationView.selectedItemId = R.id.navigation_scrap
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_group -> {
+                    startActivity(Intent(this, GroupListMain::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapActivity::class.java))
+                    true
+                }
+                R.id.navigation_scrap -> {
+                    startActivity(Intent(this, MyScrapActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun loadUserInfo() {
@@ -97,6 +120,8 @@ class MyPage : AppCompatActivity() {
             userNameEditText.setText(name)
             userEmailEditText.setText(userEmail)
             userEmailEditText.isEnabled = false
+        } else {
+            Toast.makeText(this, "사용자 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
         }
         cursor.close()
     }

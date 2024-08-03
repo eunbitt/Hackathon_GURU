@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <!-- 상단 바 -->
@@ -11,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/second_color"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/back_button"
@@ -38,10 +38,9 @@
         android:id="@+id/profile_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/page_title"
+        android:layout_below="@id/back_button"
         android:padding="16dp"
-        android:layout_marginTop="90dp"
-        tools:ignore="NotSibling">
+        android:layout_marginTop="90dp">
 
         <ImageView
             android:id="@+id/profile_image"
@@ -170,76 +169,16 @@
     </LinearLayout>
 
     <!-- 하단 네비게이션 바 -->
-    <LinearLayout
-        android:id="@+id/bottom_navigation"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="#FFFFFF"
-        android:elevation="4dp"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_group"
-                app:tint="#5F6368" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="그룹"
-                android:textColor="#5F6368"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_map"
-                app:tint="#5F6368"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지도"
-                android:textColor="#5F6368"
-                android:textSize="12sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_scrap"
-                app:tint="#5F6368"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="스크랩"
-                android:textColor="#5F6368"
-                android:textSize="12sp"/>
-        </LinearLayout>
-    </LinearLayout>
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@drawable/nav_item_selector"
+        app:itemTextAppearanceActive="@style/BottomNavigationView"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextColor="@drawable/nav_item_selector"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>

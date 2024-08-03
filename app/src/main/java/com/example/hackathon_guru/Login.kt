@@ -50,7 +50,7 @@ class Login : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 if (dbHelper.getUser(email, password)) {
                     Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MyPage::class.java)
+                    val intent = Intent(this, MapActivity::class.java)
                     intent.putExtra("USER_EMAIL", email)
                     startActivity(intent)
                     finish() // Optional: Close the login activity

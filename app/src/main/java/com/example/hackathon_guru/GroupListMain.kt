@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupListMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -31,7 +31,7 @@ class GroupListMain : AppCompatActivity() {
         // Load groups from SharedPreferences
         loadGroups()
 
-// BottomNavigationView 설정
+        // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
         bottomNavigationView.selectedItemId = R.id.navigation_map // map 선택
 
@@ -51,6 +51,13 @@ class GroupListMain : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        // GroupScrap 아이콘 클릭 시 MyPage로 이동하도록 설정
+        val groupScrapIcon = findViewById<ImageView>(R.id.GroupScrap)
+        groupScrapIcon.setOnClickListener {
+            val intent = Intent(this, MyPage::class.java)
+            startActivity(intent)
         }
 
         // Setup RecyclerView
