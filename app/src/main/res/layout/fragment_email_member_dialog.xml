@@ -25,19 +25,19 @@
                 android:id="@+id/dialogTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="새 그룹 추가"
+                android:text="멤버 추가"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:layout_centerInParent="true" />
 
             <ImageButton
-                android:id="@+id/closeButton"
+                android:id="@+id/cancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Close"
+                android:contentDescription="Cancel"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -53,60 +53,16 @@
         </RelativeLayout>
 
         <EditText
-            android:id="@+id/groupNameEditText"
+            android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:hint="Group Name"
-            android:inputType="text"
+            android:hint="Enter Member's Name or Email"
+            android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textSize="16sp"
             android:background="@drawable/edittext_background_rounded"
             android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/selectDateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:hint="Select Date"
-            android:inputType="none"
-            android:focusable="false"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:background="@drawable/edittext_background_rounded"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Members"
-            android:textSize="16sp"
-            android:gravity="start"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"/>
-
-        <LinearLayout
-            android:id="@+id/memberContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp">
-            <!-- 멤버들이 추가되는 컨테이너 -->
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/addMemberButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Member"
-            android:layout_marginBottom="16dp"/>
-
     </LinearLayout>
 </layout>

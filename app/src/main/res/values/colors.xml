@@ -16,4 +16,9 @@
     <color name="navy_pin">#183F62</color>
     <color name="skyblue_backscreen">#F0FCFF</color>
     <color name="mint_logo">#47D1EE</color>
+    <color name="past_group">#B0BEC5</color> <!-- 과거 그룹 배경 색상 (회색) -->
+    <color name="future_group">#FFFFFF</color> <!-- 미래 그룹 배경 색상 (흰색) -->
+    <color name="background_past">#B0BEC5</color> <!-- 과거 일정의 배경색 -->
+    <color name="background_future">#FFFFFF</color> <!-- 미래 일정의 배경색 -->
+<!--    <color name="calendar_day_text_color">#40C0DB</color>-->
 </resources>

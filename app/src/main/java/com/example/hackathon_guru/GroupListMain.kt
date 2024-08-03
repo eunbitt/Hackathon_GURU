@@ -1,13 +1,18 @@
 package com.example.hackathon_guru
 
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupListMainBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class GroupListMain : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupListMainBinding
+    private lateinit var groupAdapter: GroupAdapter
+    private val groupList = mutableListOf<TravelGroup>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,40 +21,80 @@ class GroupListMain : AppCompatActivity() {
 
         // Setup Toolbar
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바 타이틀 비활성화
 
         // Setup RecyclerView
-        val groupList = listOf(
-                TravelGroup(name = "부산", dates = "7월 12일 ~ 7월 14일"),
-                TravelGroup(name = "서울", dates = "8월 1일 ~ 8월 9일"),
-                TravelGroup(name = "인천", dates = "6월 1일 ~ 6월 9일")
-        )
-
         binding.groupRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.groupRecyclerView.adapter = GroupAdapter(groupList)
+        groupAdapter = GroupAdapter(groupList) { group, action ->
+            when (action) {
+                "edit" -> showEditGroupDialog(group)
+                "delete" -> showDeleteGroupDialog(group)
+            }
+        }
+        binding.groupRecyclerView.adapter = groupAdapter
 
         // Setup Add Group Button
-        binding.addGroupButton.setOnClickListener {
+        binding.AddIcon.setOnClickListener {
             val addGroupDialog = AddGroupDialogFragment()
             addGroupDialog.show(supportFragmentManager, "AddGroupDialogFragment")
         }
 
-        // Setup Bottom Navigation View
-        binding.navigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_group -> {
-                    // Handle group navigation
-                    true
-                }
-                R.id.navigation_map -> {
-                    // Handle map navigation
-                    true
-                }
-                R.id.navigation_scrap -> {
-                    // Handle scrap navigation
-                    true
-                }
-                else -> false
-            }
+        // Fragment Result Listener 설정
+        supportFragmentManager.setFragmentResultListener("addGroupRequestKey", this) { _, bundle ->
+            val newGroup = bundle.getParcelable<TravelGroup>("newGroup")
+            Log.d("GroupListMain", "New group received: $newGroup")
+            newGroup?.let { addNewGroup(it) }
         }
+    }
+
+    private fun addNewGroup(group: TravelGroup) {
+        Log.d("GroupListMain", "Adding new group: $group")
+        groupList.add(0, group) // 새로운 그룹을 맨 위에 추가
+        groupAdapter.notifyItemInserted(0)
+        binding.groupRecyclerView.scrollToPosition(0) // 추가된 항목으로 스크롤
+    }
+
+    private fun showEditGroupDialog(group: TravelGroup) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_group, null)
+        val groupNameInput = dialogView.findViewById<TextInputEditText>(R.id.groupNameInput)
+        val groupDateInput = dialogView.findViewById<TextInputEditText>(R.id.groupDateInput)
+        val groupMembersInput = dialogView.findViewById<TextInputEditText>(R.id.groupMembersInput)
+
+        groupNameInput.setText(group.name)
+        groupDateInput.setText(group.dates)
+        groupMembersInput.setText(group.members.joinToString(","))
+
+        AlertDialog.Builder(this)
+            .setTitle("         ")
+            .setView(dialogView)
+            .setPositiveButton("수정") { dialog, _ ->
+                group.name = groupNameInput.text.toString()
+                group.dates = groupDateInput.text.toString()
+                group.members = groupMembersInput.text.toString().split(",")
+
+                groupAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showDeleteGroupDialog(group: TravelGroup) {
+        AlertDialog.Builder(this)
+            .setTitle("그룹 삭제")
+            .setMessage("정말 이 그룹을 삭제하시겠습니까?")
+            .setPositiveButton("삭제") { dialog, _ ->
+                groupList.remove(group)
+                groupAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

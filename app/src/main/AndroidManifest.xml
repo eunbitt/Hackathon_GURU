@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hackathon_guru">
-
     <!-- 카카오맵 사용을 위한 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -14,21 +12,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_GURU">
-
+        <activity
+            android:name=".GroupDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_group_detail"
+            android:theme="@style/Theme.Hackathon_GURU" />
         <activity
             android:name=".MyScrapActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MyScrapDetailActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
+        <activity
+            android:name=".GroupListMain"
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

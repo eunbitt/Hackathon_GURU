@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Hackathon_GURU</string>
     <string name="kakao_app_key">58e8c8d2a35ff23dec33d33281011a29</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="date_range">%1$s ~ %2$s</string>
+    <string name="member_image">Member Image</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_dates">Group Dates</string>
+    <string name="edit_group">Edit Group</string>
+    <string name="title_activity_group_detail">GroupDetailActivity</string>
+    <string name="add_schedule">일정을 추가하세요</string>
+    <string name="toggle_schedule">일정 토글</string>
+    <string name="edit_schedule">일정 수정</string>
 </resources>
