@@ -123,6 +123,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // 장소 정보를 스크랩할 수 있는 다이얼로그 표시
     private fun showScrapDialog(place: AutocompletePrediction) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.activity_my_scrap_choose_folder_dialog)
