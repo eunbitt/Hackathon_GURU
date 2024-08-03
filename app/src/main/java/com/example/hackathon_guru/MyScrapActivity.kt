@@ -88,7 +88,7 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
     }
 
     private fun showAddFolderDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_folder_more_button, null)
+        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_add_folder_dialog, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
