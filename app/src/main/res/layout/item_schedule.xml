@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="일정을 추가하세요"
+                android:fontFamily="@font/pretendardregular"
                 android:textSize="18sp"
                 android:textColor="@android:color/darker_gray"
                 android:layout_gravity="center_vertical" />

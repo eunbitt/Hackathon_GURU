@@ -109,7 +109,7 @@ class GroupListMain : AppCompatActivity() {
     private fun showDeleteGroupDialog(group: TravelGroup) {
         AlertDialog.Builder(this)
             .setTitle("그룹 삭제")
-            .setMessage("정말 이 그룹을 삭제하시겠습니까?")
+            .setMessage("그룹을 삭제하시겠습니까?")
             .setPositiveButton("삭제") { dialog, _ ->
                 groupList.remove(group)
                 groupAdapter.notifyDataSetChanged()

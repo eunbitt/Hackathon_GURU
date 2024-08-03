@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="그룹 정보 수정"
                 android:textSize="18sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/pretendardbold"
                 android:textColor="@android:color/black"
                 android:layout_centerInParent="true" />
 
@@ -59,6 +59,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:hint="Group Name"
+            android:fontFamily="@font/pretendardregular"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="16sp"
@@ -72,6 +73,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:hint="Group Date"
+            android:fontFamily="@font/pretendardregular"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="16sp"
@@ -85,6 +87,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:hint="Group Members (comma separated)"
+            android:fontFamily="@font/pretendardregular"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="16sp"

@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="새 그룹 추가"
                 android:textSize="18sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/pretendardbold"
                 android:textColor="@android:color/black"
                 android:layout_centerInParent="true" />
 
@@ -59,6 +59,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:hint="Group Name"
+            android:fontFamily="@font/pretendardmedium"
             android:inputType="text"
             android:padding="12dp"
             android:textSize="16sp"
@@ -72,6 +73,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:hint="Select Date"
+            android:fontFamily="@font/pretendardmedium"
             android:inputType="none"
             android:focusable="false"
             android:padding="12dp"
@@ -83,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Members"
+            android:fontFamily="@font/pretendardmedium"
             android:textSize="16sp"
             android:gravity="start"
             android:layout_marginBottom="8dp"
@@ -105,7 +108,8 @@
             android:id="@+id/addMemberButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Member"
+            android:text="멤버 추가"
+            android:fontFamily="@font/pretendardmedium"
             android:layout_marginBottom="16dp"/>
 
     </LinearLayout>

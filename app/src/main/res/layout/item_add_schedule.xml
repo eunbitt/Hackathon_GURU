@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="일정을 추가하세요"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/pretendardbold"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

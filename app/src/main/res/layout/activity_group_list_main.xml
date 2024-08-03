@@ -10,13 +10,12 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="My Travel Group" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
         android:id="@+id/UperBar"
@@ -66,19 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_group" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@drawable/nav_item_selector"
-        app:itemTextAppearanceActive="@style/BottomNavigationView"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextColor="@drawable/nav_item_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+    <include layout="@layout/bottom_navigation" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
