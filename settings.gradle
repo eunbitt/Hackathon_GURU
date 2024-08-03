@@ -1,16 +1,22 @@
+// 구글맵 api
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
 rootProject.name = "Hackathon_GURU"
 
-// 설정을 통해 프로젝트에서 사용하는 레포지토리를 정의합니다.
+// Include application module
+include ':app'
+
+// 구글맵 api
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven {
-            url = uri("https://devrepo.kakao.com/nexus/content/groups/public/")
-        }
     }
 }
-
-// Include application module
-include ':app'

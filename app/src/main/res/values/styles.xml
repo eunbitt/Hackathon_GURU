@@ -9,16 +9,40 @@
         <item name="colorAccent">@color/black</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowMinWidthMajor">90%</item>
-        <item name="android:windowMinWidthMinor">90%</item>
-    </style>
-
     <!-- Toolbar title text style -->
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item> <!-- 원하는 폰트 크기로 조정 -->
         <item name="android:textColor">#FFFFFF</item> <!-- 원하는 텍스트 색상으로 조정 -->
+    </style>
+
+    <!-- 다이얼로그 테마 -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+<!--    <style name="DialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">-->
+<!--        &lt;!&ndash; Customize your theme here &ndash;&gt;-->
+<!--        <item name="colorAccent">#40C0DB</item>-->
+<!--    </style>-->
+
+    <!-- Custom Date Range Picker Theme -->
+    <style name="CustomDateRangePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+<!--        <item name="materialCalendarDaySelectedBackground">#40C0DB</item>-->
+        <item name="materialCalendarFullscreenTheme">@style/Widget.MaterialComponents.MaterialCalendar</item>
+    </style>
+
+    <!-- Cancel Button Style -->
+    <style name="Widget.MaterialComponents.Button.TextButton.Dialog.Cancel" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- BottomNavigationView style -->
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/pretendardbold</item>
     </style>
 
 </resources>
