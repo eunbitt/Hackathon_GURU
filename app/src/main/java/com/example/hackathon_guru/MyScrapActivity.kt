@@ -16,8 +16,11 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
 
     private lateinit var binding: ActivityMyScrapBinding
     private lateinit var recyclerView: RecyclerView
-    private val folderAdapter = FolderAdapter(this, mutableListOf(), this) // 콜백 전달
-
+    private val folderAdapter = FolderAdapter(this, mutableListOf(), object : FolderUpdateListener {
+        override fun onFolderListUpdated() {
+            saveFoldersToPreferences()
+        }
+    })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyScrapBinding.inflate(layoutInflater)
