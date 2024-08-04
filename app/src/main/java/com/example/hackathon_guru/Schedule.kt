@@ -1,3 +1,5 @@
+package com.example.hackathon_guru
+
 data class Schedule(
     var title: String,
     var date: String,

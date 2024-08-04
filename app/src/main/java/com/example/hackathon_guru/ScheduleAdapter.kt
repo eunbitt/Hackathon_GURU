@@ -1,6 +1,7 @@
 package com.example.hackathon_guru
 
-import Schedule
+import android.app.DatePickerDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import android.app.DatePickerDialog
-import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.hackathon_guru.Schedule
+
 
 class ScheduleAdapter(
-    private val scheduleList: MutableList<Schedule>,
+    private var scheduleList: List<Schedule>, // 변경된 부분
     private val onAddScheduleClick: (Schedule) -> Unit
 ) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
 
@@ -70,6 +71,12 @@ class ScheduleAdapter(
     }
 
     override fun getItemCount() = scheduleList.size
+
+    // 새로운 메서드 추가: 데이터 업데이트
+    fun updateSchedules(newSchedules: List<Schedule>) {
+        scheduleList = newSchedules
+        notifyDataSetChanged()
+    }
 
     private fun showEditDeleteDialog(view: View, position: Int, schedule: Schedule) {
         val options = arrayOf("수정", "삭제")
@@ -127,7 +134,7 @@ class ScheduleAdapter(
     }
 
     private fun deleteSchedule(position: Int) {
-        scheduleList.removeAt(position)
+        scheduleList = scheduleList.toMutableList().apply { removeAt(position) } // 변경된 부분
         notifyItemRemoved(position)
     }
 
@@ -159,7 +166,7 @@ class ScheduleAdapter(
         val scheduleInfoLayout: LinearLayout = itemView.findViewById(R.id.scheduleInfoLayout)
     }
 
-    // 추가된 코드: 항목을 이동하는 기능을 위해 ItemTouchHelper.Callback 구현
+    // 항목을 이동하는 기능을 위해 ItemTouchHelper.Callback 구현
     val itemTouchHelperCallback = object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView,
@@ -176,7 +183,7 @@ class ScheduleAdapter(
         ): Boolean {
             val fromPosition = viewHolder.adapterPosition
             val toPosition = target.adapterPosition
-            Collections.swap(scheduleList, fromPosition, toPosition)
+            Collections.swap(scheduleList.toMutableList(), fromPosition, toPosition)
             notifyItemMoved(fromPosition, toPosition)
             return true
         }

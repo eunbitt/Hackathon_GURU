@@ -1,17 +1,19 @@
 package com.example.hackathon_guru
 
-import Schedule
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hackathon_guru.databinding.ActivityGroupDetailBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,11 +23,14 @@ class GroupDetailActivity : AppCompatActivity() {
     private lateinit var scheduleAdapter: ScheduleAdapter
     private val scheduleList = mutableListOf<Schedule>()
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private lateinit var viewModel: ScheduleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
 
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
@@ -59,6 +64,9 @@ class GroupDetailActivity : AppCompatActivity() {
         // 리사이클러뷰 설정
         setupRecyclerView()
 
+        // 데이터 로드
+        loadSchedulesFromPreferences()
+
         binding.backButton.setOnClickListener {
             onBackPressed() // 이전 페이지로 이동
         }
@@ -71,26 +79,23 @@ class GroupDetailActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+        if (scheduleList.isEmpty()) {
+            scheduleList.add(Schedule("일정을 추가하세요", "", "", ""))
+        }
+
         scheduleAdapter = ScheduleAdapter(scheduleList) { schedule ->
-            // 일정 추가 버튼 클릭 시 다이얼로그 표시
             if (schedule.title == "일정을 추가하세요") {
                 showAddScheduleDialog()
             }
         }
+
         binding.scheduleRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@GroupDetailActivity)
             adapter = scheduleAdapter
         }
 
-        // 드래그 앤 드롭을 위한 ItemTouchHelper 설정
         val itemTouchHelper = ItemTouchHelper(scheduleAdapter.itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.scheduleRecyclerView)
-
-        // 기본 일정 추가 메시지
-        if (scheduleList.isEmpty()) {
-            scheduleList.add(Schedule("일정을 추가하세요", date = ""))
-        }
-        scheduleAdapter.notifyDataSetChanged()
     }
 
     private fun showAddScheduleDialog() {
@@ -100,7 +105,6 @@ class GroupDetailActivity : AppCompatActivity() {
         val scheduleLocationInput = dialogView.findViewById<TextInputEditText>(R.id.scheduleLocationInput)
         val scheduleCommentInput = dialogView.findViewById<TextInputEditText>(R.id.scheduleCommentInput)
 
-        // 날짜 선택 클릭 리스너 설정
         scheduleDateInput.setOnClickListener {
             showDatePickerDialog(scheduleDateInput)
         }
@@ -118,6 +122,7 @@ class GroupDetailActivity : AppCompatActivity() {
                     val newSchedule = Schedule(title, date, location, comment)
                     scheduleList.add(newSchedule)
                     scheduleAdapter.notifyDataSetChanged()
+                    saveSchedulesToPreferences() // 일정 추가 후 저장
                 }
                 dialog.dismiss()
             }
@@ -141,5 +146,30 @@ class GroupDetailActivity : AppCompatActivity() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
         datePickerDialog.show()
+    }
+
+    private fun saveSchedulesToPreferences() {
+        val sharedPreferences = getSharedPreferences("GroupDetailPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(scheduleList)
+        editor.putString("schedules", json)
+        editor.apply()
+    }
+
+    private fun loadSchedulesFromPreferences() {
+        val sharedPreferences = getSharedPreferences("GroupDetailPrefs", MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("schedules", null)
+        val type = object : TypeToken<MutableList<Schedule>>() {}.type
+        scheduleList.clear()
+        if (json != null) {
+            val savedSchedules: MutableList<Schedule> = gson.fromJson(json, type)
+            scheduleList.addAll(savedSchedules)
+        } else {
+            // 초기 값 추가 (예: 기본 일정)
+            scheduleList.add(Schedule("일정을 추가하세요", "", "", ""))
+        }
+        scheduleAdapter.notifyDataSetChanged()
     }
 }
