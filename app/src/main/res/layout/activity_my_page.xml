@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MyPage">
 
     <!-- 상단 바 -->
     <RelativeLayout
@@ -38,7 +38,6 @@
         android:id="@+id/profile_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/back_button"
         android:padding="16dp"
         android:layout_marginTop="90dp">
 
@@ -49,17 +48,6 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_test_user1" />
 
-        <ImageView
-            android:id="@+id/edit_image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignBottom="@+id/profile_image"
-            android:layout_alignEnd="@+id/profile_image"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="4dp"
-            android:src="@drawable/ic_add_circle"
-            android:layout_alignRight="@+id/profile_image"
-            android:layout_marginRight="4dp" />
     </RelativeLayout>
 
     <!-- 사용자 정보 섹션 -->

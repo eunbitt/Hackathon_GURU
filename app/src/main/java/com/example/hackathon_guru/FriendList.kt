@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.hackathon_guru.helpers.DatabaseHelper
+import com.example.hackathon_guru.DB.DatabaseHelper
 
 class FriendList : AppCompatActivity() {
 
@@ -44,6 +44,23 @@ class FriendList : AppCompatActivity() {
         addDeleteButton.setOnClickListener {
             showManageFriendsDialog()
         }
+
+        // 친구 목록 로드
+        loadFriends()
+    }
+
+    private fun loadFriends() {
+        val cursor = dbHelper.getFriends(userEmail)
+        friendList.clear()
+        friendListLayout.removeAllViews()
+        if (cursor.moveToFirst()) {
+            do {
+                val friendName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FRIEND_NAME))
+                friendList.add(friendName)
+                addFriendView(friendName)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
     }
 
     private fun addFriendView(friendName: String) {
@@ -94,8 +111,10 @@ class FriendList : AppCompatActivity() {
                 } else {
                     val friendName = dbHelper.getUserNameByEmail(friendEmail)
                     if (friendName != null) {
+                        dbHelper.addFriend(userEmail, friendEmail, friendName)
                         friendList.add(friendName)
                         addFriendView(friendName)
+                        Toast.makeText(this, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "친구를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
@@ -126,8 +145,10 @@ class FriendList : AppCompatActivity() {
         builder.setTitle("삭제 확인")
         builder.setMessage("정말로 삭제하시겠습니까?")
         builder.setPositiveButton("삭제") { _, _ ->
+            dbHelper.deleteFriend(userEmail, friendName)
             friendListLayout.removeView(friendView)
             friendList.remove(friendName)
+            Toast.makeText(this, "친구가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         builder.setNegativeButton("취소") { dialog, _ ->

@@ -10,11 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.hackathon_guru.helpers.DatabaseHelper
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.hackathon_guru.DB.DatabaseHelper
 
 class MyPage : AppCompatActivity() {
-
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var userEmail: String
     private lateinit var userNameEditText: EditText
@@ -24,11 +22,8 @@ class MyPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_page)
-
         dbHelper = DatabaseHelper(this)
-
-        userEmail = intent.getStringExtra("USER_EMAIL") ?: ""
-
+        userEmail = intent.getStringExtra("USER_EMAIL") ?: "admin1234@gmail.com"
         val backButton: ImageView = findViewById(R.id.back_button)
         val profileImage: ImageView = findViewById(R.id.profile_image)
         userNameEditText = findViewById(R.id.name)
@@ -41,12 +36,10 @@ class MyPage : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
-
         profileImage.setOnClickListener {
             Toast.makeText(this, "Profile Image Clicked", Toast.LENGTH_SHORT).show()
             // Add logic to edit profile image
         }
-
         saveNameButton.setOnClickListener {
             val newName = userNameEditText.text.toString()
             if (newName.isEmpty()) {
@@ -58,7 +51,6 @@ class MyPage : AppCompatActivity() {
                 Toast.makeText(this, "이름이 업데이트되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-
         friendListText.setOnClickListener {
             val intent = Intent(this, FriendList::class.java)
             intent.putExtra("USER_EMAIL", userEmail)
@@ -67,12 +59,15 @@ class MyPage : AppCompatActivity() {
 
         logoutText.setOnClickListener {
             Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+            // Add logic to logout
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
         }
 
         deleteAccountText.setOnClickListener {
+            Toast.makeText(this, "계정이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            // Add logic to delete account
             AlertDialog.Builder(this).apply {
                 setTitle("계정 삭제")
                 setMessage("계정을 삭제하시겠습니까?")
@@ -89,28 +84,6 @@ class MyPage : AppCompatActivity() {
         }
 
         loadUserInfo()
-
-        // BottomNavigationView 설정
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
-        bottomNavigationView.selectedItemId = R.id.navigation_scrap
-
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_group -> {
-                    startActivity(Intent(this, GroupListMain::class.java))
-                    true
-                }
-                R.id.navigation_map -> {
-                    startActivity(Intent(this, MapActivity::class.java))
-                    true
-                }
-                R.id.navigation_scrap -> {
-                    startActivity(Intent(this, MyScrapActivity::class.java))
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     private fun loadUserInfo() {
@@ -118,11 +91,11 @@ class MyPage : AppCompatActivity() {
         if (cursor.moveToFirst()) {
             val name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_USER_NAME))
             userNameEditText.setText(name)
-            userEmailEditText.setText(userEmail)
-            userEmailEditText.isEnabled = false
         } else {
-            Toast.makeText(this, "사용자 정보를 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+            userNameEditText.setText("admin")
         }
+        userEmailEditText.setText(userEmail)
+        userEmailEditText.isEnabled = false
         cursor.close()
     }
 }

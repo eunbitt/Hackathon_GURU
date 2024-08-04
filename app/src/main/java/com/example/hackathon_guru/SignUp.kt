@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.hackathon_guru.helpers.DatabaseHelper
+import com.example.hackathon_guru.DB.DatabaseHelper
 
 class SignUp : AppCompatActivity() {
 
