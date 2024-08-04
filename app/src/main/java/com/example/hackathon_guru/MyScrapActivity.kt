@@ -7,20 +7,16 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpdateListener 인터페이스 추가
+class MyScrapActivity : AppCompatActivity(), FolderUpdateListener {
 
     private lateinit var binding: ActivityMyScrapBinding
     private lateinit var recyclerView: RecyclerView
-    private val folderAdapter = FolderAdapter(this, mutableListOf(), object : FolderUpdateListener {
-        override fun onFolderListUpdated() {
-            saveFoldersToPreferences()
-        }
-    })
+    private val folderAdapter = FolderAdapter(this, mutableListOf(), this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyScrapBinding.inflate(layoutInflater)
@@ -73,6 +69,12 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
                     showAlertDialog("폴더 이름 중복", "이미 존재하는 폴더 이름입니다.")
                 }
             }
+        }
+
+        // 전달받은 폴더 이름이 있는 경우 해당 폴더를 열기
+        val folderName = intent.getStringExtra("folderName")
+        if (folderName != null) {
+            openFolder(folderName)
         }
     }
 
@@ -128,7 +130,12 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
             .show()
     }
 
-    // FolderUpdateListener 인터페이스 구현
+    private fun openFolder(folderName: String) {
+        val intent = Intent(this, MyScrapDetailActivity::class.java)
+        intent.putExtra("folderName", folderName)
+        startActivity(intent)
+    }
+
     override fun onFolderListUpdated() {
         saveFoldersToPreferences()
     }
