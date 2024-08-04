@@ -1,6 +1,9 @@
+package com.example.hackathon_guru
+
 data class Schedule(
-    val title: String,
-    val location: String = "",
-    val comment: String = "",
+    var title: String,
+    var date: String,
+    var location: String = "",
+    var comment: String = "",
     var isExpanded: Boolean = false
 )

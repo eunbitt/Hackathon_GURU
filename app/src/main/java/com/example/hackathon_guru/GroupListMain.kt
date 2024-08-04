@@ -33,7 +33,7 @@ class GroupListMain : AppCompatActivity() {
 
         // BottomNavigationView 설정
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navigationView)
-        bottomNavigationView.selectedItemId = R.id.navigation_map // map 선택
+        bottomNavigationView.selectedItemId = R.id.navigation_group // map 선택
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
