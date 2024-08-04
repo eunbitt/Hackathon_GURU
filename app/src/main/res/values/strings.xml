@@ -22,4 +22,5 @@
     <string name="add_schedule">일정을 추가하세요</string>
     <string name="toggle_schedule">일정 토글</string>
     <string name="edit_schedule">일정 수정</string>
+    <string name="register_text">Register</string>
 </resources>

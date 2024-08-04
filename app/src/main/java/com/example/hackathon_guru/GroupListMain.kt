@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,6 +52,13 @@ class GroupListMain : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        // GroupScrap 아이콘 클릭 시 MyPage로 이동하도록 설정
+        val groupScrapIcon = findViewById<ImageView>(R.id.GroupScrap)
+        groupScrapIcon.setOnClickListener {
+            val intent = Intent(this, MyPage::class.java)
+            startActivity(intent)
         }
 
         // Setup RecyclerView

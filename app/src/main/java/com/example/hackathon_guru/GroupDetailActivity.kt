@@ -84,6 +84,7 @@ class GroupDetailActivity : AppCompatActivity() {
         }
 
         scheduleAdapter = ScheduleAdapter(scheduleList) { schedule ->
+            // 일정 추가 버튼 클릭 시 다이얼로그 표시
             if (schedule.title == "일정을 추가하세요") {
                 showAddScheduleDialog()
             }

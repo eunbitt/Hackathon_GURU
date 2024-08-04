@@ -33,13 +33,17 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MapActivity"
+            android:name=".Login"
             android:exported="true">
         <intent-filter> <!-- 메인 화면 맵페이지로 설정 -->
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MyScrapFolderMoreButton"
@@ -60,6 +64,8 @@
         <activity
             android:name=".GroupListMain"
             android:exported="false" />
+
+
     </application>
 
 </manifest>

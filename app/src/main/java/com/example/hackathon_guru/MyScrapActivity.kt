@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -56,6 +57,13 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener {
         // AddIcon 클릭 리스너 설정
         binding.AddIcon.setOnClickListener {
             showAddFolderDialog()
+        }
+
+        // GroupScrap 클릭 리스너 설정
+        val groupScrap = findViewById<ImageView>(R.id.GroupScrap)
+        groupScrap.setOnClickListener {
+            val intent = Intent(this, MyPage::class.java)
+            startActivity(intent)
         }
 
         // Fragment 결과 수신 설정

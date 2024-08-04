@@ -37,6 +37,7 @@ class ScheduleAdapter(
         if (currentSchedule.title == "일정을 추가하세요") {
             holder.addScheduleLayout.visibility = View.VISIBLE
             holder.scheduleInfoLayout.visibility = View.GONE
+            holder.addSchedule.visibility = View.VISIBLE
             holder.toggleSchedule.visibility = View.GONE
             holder.editSchedule.visibility = View.GONE
         } else {
@@ -59,6 +60,7 @@ class ScheduleAdapter(
 
             holder.editSchedule.setOnClickListener {
                 showEditDeleteDialog(holder.itemView, position, currentSchedule)
+                // Edit schedule logic here
             }
         }
 
