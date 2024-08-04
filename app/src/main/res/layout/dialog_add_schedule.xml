@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!-- 필요한 데이터 변수 정의 -->
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/dialog_background"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/scheduleDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Date"
+            android:inputType="none"
+            android:focusable="false"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/scheduleTitleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Schedule Title"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/scheduleLocationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Place"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/scheduleCommentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comment"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:background="@drawable/edittext_background_rounded"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</layout>

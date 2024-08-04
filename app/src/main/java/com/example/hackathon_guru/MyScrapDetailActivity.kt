@@ -46,7 +46,7 @@ class MyScrapDetailActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_group -> {
-                    // Handle group navigation
+                    startActivity(Intent(this, GroupListMain::class.java))
                     true
                 }
                 R.id.navigation_map -> {

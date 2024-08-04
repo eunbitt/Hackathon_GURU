@@ -7,16 +7,15 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackathon_guru.databinding.ActivityMyScrapBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpdateListener 인터페이스 추가
+class MyScrapActivity : AppCompatActivity(), FolderUpdateListener {
 
     private lateinit var binding: ActivityMyScrapBinding
     private lateinit var recyclerView: RecyclerView
-    private val folderAdapter = FolderAdapter(this, mutableListOf(), this) // 콜백 전달
+    private val folderAdapter = FolderAdapter(this, mutableListOf(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,10 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_group -> true
+                R.id.navigation_group -> {
+                    startActivity(Intent(this, GroupListMain::class.java))
+                    true
+                }
                 R.id.navigation_map -> {
                     val intent = Intent(this, MapActivity::class.java)
                     intent.putStringArrayListExtra("scrapFolders", ArrayList(folderAdapter.getFolderList()))
@@ -45,7 +47,6 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
                     true
                 }
                 R.id.navigation_scrap -> {
-                    startActivity(Intent(this, MyScrapActivity::class.java))
                     true
                 }
                 else -> false
@@ -69,6 +70,12 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
                 }
             }
         }
+
+        // 전달받은 폴더 이름이 있는 경우 해당 폴더를 열기
+        val folderName = intent.getStringExtra("folderName")
+        if (folderName != null) {
+            openFolder(folderName)
+        }
     }
 
     private fun saveFoldersToPreferences() {
@@ -88,7 +95,7 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
     }
 
     private fun showAddFolderDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_folder_more_button, null)
+        val dialogView = layoutInflater.inflate(R.layout.activity_my_scrap_add_folder_dialog, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
@@ -123,7 +130,12 @@ class MyScrapActivity : AppCompatActivity(), FolderUpdateListener { // FolderUpd
             .show()
     }
 
-    // FolderUpdateListener 인터페이스 구현
+    private fun openFolder(folderName: String) {
+        val intent = Intent(this, MyScrapDetailActivity::class.java)
+        intent.putExtra("folderName", folderName)
+        startActivity(intent)
+    }
+
     override fun onFolderListUpdated() {
         saveFoldersToPreferences()
     }

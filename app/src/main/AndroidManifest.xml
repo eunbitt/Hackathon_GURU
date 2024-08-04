@@ -50,15 +50,16 @@
 
         <activity
             android:name=".MyScrapActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".MyScrapDetailActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
-            android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:name=".GroupDetailActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".GroupListMain"
+            android:exported="false" />
     </application>
 
 </manifest>

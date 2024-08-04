@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="폴더 이름"
-        android:fontFamily="@font/pretendardregular"
+        android:textSize="15sp"
+        android:fontFamily="@font/pretendardmedium"
         android:gravity="center_vertical"
         android:buttonTint="@color/black"
         android:textColor="@android:color/black"/>
